@@ -1,0 +1,23 @@
+input {
+ height: 40px;
+ border: 0px;
+ border-bottom: 2px solid #ededed;
+ font-size: 22px;
+ padding: 5px;
+}
+
+input:focus {
+ outline: none;
+ border-bottom: 2px solid var(--color-primary-light) !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}

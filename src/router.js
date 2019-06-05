@@ -21,6 +21,10 @@ export default new Router({
         path: 'dashboard',
         name: 'Dashboard',
         component: () => import('@/dashboard/Dashboard')
+      },{
+        path: 'list',
+        name: 'List',
+        component: () => import('@/list/ListWrapper')
       }]
     }
   ]

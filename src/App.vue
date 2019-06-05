@@ -8,6 +8,8 @@
 
 <script>
 import "./assets/styles/index.css"
+import "./assets/styles/scroll.css"
+import "./assets/styles/input.css"
 
 export default {
   name: 'App',

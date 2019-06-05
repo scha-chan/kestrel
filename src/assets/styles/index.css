@@ -1,8 +1,11 @@
 :root {
-  --height-navbar: 60px;
+  --height-navbar: 50px;
   --color-primary: #8f1dd7;
   --color-primary-faded: #9a33db;
+  --color-primary-light: #d2a4ef;
+
   --color-black: #191414;
+  --color-white-faded: #f9f9f9;
 }
 
 .centralized-content {
@@ -23,19 +26,6 @@ section {
  a {
    color: var(--color-primary);
  }
-
-input {
-  height: 40px;
-  border: 0px;
-  border-bottom: 2px solid #ededed;
-  font-size: 22px;
-  padding: 5px;
-}
-
-input:focus {
-  outline: none;
-  border-bottom: 2px solid #cacaff;
-}
 
 button {
   border: 0px;
