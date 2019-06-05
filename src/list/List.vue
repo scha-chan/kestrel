@@ -38,7 +38,6 @@ export default {
 .content {
   width: 100%;
   height: calc(100% - 50px);
-  padding-bottom: 20px;
   overflow: hidden;
   overflow-y: auto;
 }
