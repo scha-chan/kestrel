@@ -19,7 +19,7 @@ export default {
       options: [{
         name: '',
         image: 'starling-primary',
-        goto: '/'
+        goto: 'login'
       },{
         name: 'Dashboard',
         image: 'dashboard-primary',
@@ -52,7 +52,7 @@ header {
   top: 0;
   left: 0;
   z-index: 10px;
-  transition: width 0.3s ease-out;
+  transition: width 0.2s ease-out;
 }
 
 header:hover {
@@ -78,7 +78,7 @@ header:hover {
   display: flex;
   width: 150px;
   margin-left: -150px;
-  transition: margin-left 0.3s ease-out, opacity 0.5s ease-out;
+  transition: margin-left 0.2s ease-out, opacity 0.3s ease-out;
 }
 
 header:hover .option .name{

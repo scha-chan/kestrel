@@ -1,8 +1,10 @@
 :root {
   --height-navbar: 50px;
+
   --color-primary: #8f1dd7;
   --color-primary-faded: #9a33db;
   --color-primary-light: #d2a4ef;
+  --color-primary-heavy: #551181;
 
   --color-black: #191414;
   --color-white-faded: #f9f9f9;

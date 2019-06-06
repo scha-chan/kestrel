@@ -1,13 +1,18 @@
 <template>
   <label>
-    <input placeholder=" ">
+    <input placeholder=" " @input="changeFn()">
     <span>{{placeholder}}</span>
   </label>
 </template>
 
 <script>
   export default {
-    props: ['placeholder']
+    props: ['placeholder', 'changeFn'],
+    methods: {
+      changeFallback() {
+        console.log("uhaeuea")
+      }
+    }
   }
 </script>
 

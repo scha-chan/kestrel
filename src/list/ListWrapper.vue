@@ -6,7 +6,7 @@
 
         </div>
         <div class="filter-wrapper">
-
+          <filter-wrapper/>
         </div>
       </div>
       <div class="list">
@@ -18,13 +18,15 @@
 
 <script>
 import List from './List'
+import FilterWrapper from './FilterWrapper'
 
-  export default {
-    name: 'ListWrapper',
-    components: {
-      List
-    }
+export default {
+  name: 'ListWrapper',
+  components: {
+    List,
+    FilterWrapper
   }
+}
 </script>
 
 <style scoped>

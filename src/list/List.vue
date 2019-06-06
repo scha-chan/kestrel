@@ -46,7 +46,7 @@ export default {
   height: 50px;
 }
 
-.item:nth-child(odd) {
+.item:nth-child(even) {
   background: var(--color-white-faded);
 }
 
