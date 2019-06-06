@@ -1,6 +1,6 @@
 <template>
   <label>
-    <input placeholder=" " @input="changeFn()">
+    <input placeholder=" " @input="changeFn">
     <span>{{placeholder}}</span>
   </label>
 </template>

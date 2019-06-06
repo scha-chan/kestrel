@@ -1,10 +1,10 @@
 <template>
-  <div class="multiselect">
-    <v-input :changeFn="testeChange"/>
-    <div class="options-wrapper">
-      <div class="option" v-for="option in items">
+  <div class="multiselect" :class="{open}">
+    <v-input :changeFn="onSearchQueryChange"/>
+    <div class="options-wrapper shadow">
+      <div class="option" v-for="option in options">
         <v-checkbox/>
-        <span>{{option}}</span>
+        <span>{{option.name}}</span>
       </div>
     </div>
   </div>
@@ -21,17 +21,50 @@ export default {
       items: [{
         name: 'teste 1',
         value: 1
+      },{
+        name: 'teste 2',
+        value: 2
+      },{
+        name: 'teste 3',
+        value: 3
+      },{
+        name: 'teste 4',
+        value: 4
+      },{
+        name: 'teste 5',
+        value: 5
+      },{
+        name: 'teste 6',
+        value: 6
+      },{
+        name: 'teste 7',
+        value: 7
+      },{
+        name: 'teste 8',
+        value: 8
       }],
-      searchQuery: ""
+      searchQuery: "",
+      open: false
     }
   },
   methods: {
-    testeChange(e) {
-      console.log('te')
+    onSearchQueryChange(e) {
+      this.searchQuery = e.target.value
+    },
+    onDocumentClickOpen(e) {
+      this.open = this.$el.contains(e.target) || e.target.classList.contains("checkbox-image")
     }
   },
+  mounted() {
+    document.addEventListener('click', this.onDocumentClickOpen)
+  },
+  beforeDestroy () {
+    document.removeEventListener('click',this.onDocumentClickOpen)
+  },
   computed: {
-
+    options() {
+      return this.items.filter(item => item.name.includes(this.searchQuery))
+    }
   },
   components: {
     'v-input': Input,
@@ -61,7 +94,7 @@ export default {
   overflow-y: auto;
 }
 
-.multiselect:focus-within .options-wrapper{
+.multiselect.open .options-wrapper{
   display: block;
 }
 

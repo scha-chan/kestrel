@@ -25,6 +25,15 @@ export default new Router({
         path: 'list',
         name: 'List',
         component: () => import('@/list/ListWrapper')
+      },{
+        path: 'planner',
+        name: 'Planner',
+        component: () => import('@/planner/Home'),
+        children: [{
+          path: '/',
+          name: 'Daily',
+          component: () => import('@/planner/Daily')
+        }]
       }]
     }
   ]

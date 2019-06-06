@@ -1,6 +1,6 @@
 <template>
   <div class="checkbox centralized-content" @click="toggle">
-    <img src="@/assets/images/tick.svg" v-if="checked">
+    <img class="checkbox-image" src="@/assets/images/tick.svg" v-if="checked">
   </div>
 </template>
 
