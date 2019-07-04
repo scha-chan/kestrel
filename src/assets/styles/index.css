@@ -1,13 +1,15 @@
 :root {
   --height-navbar: 50px;
 
-  --color-primary: #8f1dd7;
-  --color-primary-faded: #9a33db;
-  --color-primary-light: #d2a4ef;
-  --color-primary-heavy: #551181;
+  --color-primary: #d71d1d;
+  --color-primary-faded: #db3333;
+  --color-primary-light: #efa4a4;
+  --color-primary-heavy: #811111;
 
   --color-black: #191414;
   --color-white-faded: #f9f9f9;
+
+  font-size: 18px;
 }
 
 .centralized-content {
@@ -18,6 +20,10 @@
 
 .shadow {
   box-shadow: 5px 5px 30px 0px #efefef;
+}
+
+.shadow-light {
+  box-shadow: 2px 2px 10px 0px #efefef;
 }
 
 section {

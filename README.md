@@ -1,4 +1,4 @@
-# starling
+# kestrel
 
 ## Project setup
 ```

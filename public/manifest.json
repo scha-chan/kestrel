@@ -1,6 +1,6 @@
 {
-  "name": "starling",
-  "short_name": "starling",
+  "name": "kestrel",
+  "short_name": "kestrel",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
