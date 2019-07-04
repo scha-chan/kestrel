@@ -41,6 +41,9 @@ export default {
         dataLabels: {
             enabled: false
         },
+        credits: {
+            enabled: false
+        },
         title: {
             text: this.timelineTitle || '',
             align: 'left'
