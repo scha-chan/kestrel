@@ -12,7 +12,7 @@ export default {
   components: {
     'highcharts': Chart
   },
-  props: ['seriesData', 'timelineTitle', 'nameSerie'],
+  props: ['seriesDataFila', 'timelineTitle', 'nameSerieFila', 'seriesDataRequest', 'nameSerieRequest'],
   data() {
     return {
       chartOptions: {}
@@ -28,8 +28,12 @@ export default {
         //   }
         // }),
         series: [{
-          data: this.seriesData,
-          name: this.nameSerie || ''
+          data: this.seriesDataFila,
+          name: this.nameSerieFila || ''
+        },
+        {
+          data: this.seriesDataRequest,
+          name: this.nameSerieRequest || ''
         }],
         chart: {
           zoomType: 'x'
@@ -42,8 +46,8 @@ export default {
             align: 'left'
         },
         xAxis: {
-            type: 'datetime',
-            name: this.nameSerie || ''
+            type: 'datetime'
+ 
         }
       }
     }

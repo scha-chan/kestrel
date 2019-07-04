@@ -1,19 +1,23 @@
 <template id="dashboard">
   <section>
     <div class="dashboard-bar-container-wrapper">
-      <h3>Queue</h3>
+      <h3>Queue (EFW991)</h3>
       <dashboard-bar-container :data="queue" :type="'queue'"/>
     </div>
     <div class="dashboard-bar-container-wrapper">
-      <h3>Response</h3>
+      <h3>Response (EFW992)</h3>
       <dashboard-bar-container :data="response" :type="'response'"/>
     </div>
-    <div class="dashboard-timeline-wrapper left">
-      <dashboard-timeline :timelineTitle="'Entrada na Fila'" :seriesData="timelineFilaAxisAndSeriesAsArray" :nameSerie="'Inserts por Minuto'"/>
+    <div class="dashboard-timeline-wrapper">
+      <dashboard-timeline :timelineTitle="'Processamento da Fila de Envio'" 
+                          :seriesDataFila="timelineFilaAxisAndSeriesAsArray" 
+                          :seriesDataRequest="timelineEnvioAxisAndSeriesAsArray" 
+                          :nameSerieFila="'Inserts por Minuto'" 
+                          :nameSerieRequest="'Requisições por Minuto'"/>
     </div>
-    <div class="dashboard-timeline-wrapper right">
+   <!-- <div class="dashboard-timeline-wrapper right">
       <dashboard-timeline :timelineTitle="'Envio Request'" :seriesData="timelineEnvioAxisAndSeriesAsArray" :nameSerie="'Requisições por Minuto'"/>
-    </div>
+    </div> -->
 
     <tables-container :tables="tables"/>
   </section>
@@ -84,7 +88,7 @@ section {
 }
 
 .dashboard-timeline-wrapper {
-  width: 50%;
+  width: 99%;
   height: 500px;
   float: left;
 }
