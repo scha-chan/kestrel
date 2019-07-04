@@ -1,7 +1,5 @@
 <template id="dashboard">
   <section>
-    <h3>Tables:</h3>
-    <tables-container :tables="tables"/>
     <div class="dashboard-bar-container-wrapper">
       <h3>Queue</h3>
       <dashboard-bar-container :data="queue" :type="'queue'"/>
@@ -11,11 +9,13 @@
       <dashboard-bar-container :data="response" :type="'response'"/>
     </div>
     <div class="dashboard-timeline-wrapper left">
-      <dashboard-timeline :timelineTitle="'Envio'" :seriesData="timelineEnvioAxisAndSeriesAsArray"/>
+      <dashboard-timeline :timelineTitle="'Entrada na Fila'" :seriesData="timelineFilaAxisAndSeriesAsArray" :nameSerie="'Inserts por Minuto'"/>
     </div>
     <div class="dashboard-timeline-wrapper right">
-      <dashboard-timeline :timelineTitle="'Fila'" :seriesData="timelineFilaAxisAndSeriesAsArray"/>
+      <dashboard-timeline :timelineTitle="'Envio Request'" :seriesData="timelineEnvioAxisAndSeriesAsArray" :nameSerie="'Requisições por Minuto'"/>
     </div>
+
+    <tables-container :tables="tables"/>
   </section>
 </template>
 

@@ -12,7 +12,7 @@ export default {
   components: {
     'highcharts': Chart
   },
-  props: ['seriesData', 'timelineTitle'],
+  props: ['seriesData', 'timelineTitle', 'nameSerie'],
   data() {
     return {
       chartOptions: {}
@@ -29,7 +29,7 @@ export default {
         // }),
         series: [{
           data: this.seriesData,
-          name: 'Requisições por minuto'
+          name: this.nameSerie || ''
         }],
         chart: {
           zoomType: 'x'
@@ -43,7 +43,7 @@ export default {
         },
         xAxis: {
             type: 'datetime',
-            name: 'Requisições por minuto'
+            name: this.nameSerie || ''
         }
       }
     }
