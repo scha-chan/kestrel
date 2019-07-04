@@ -28,6 +28,7 @@ import TablesContainer from "./TablesContainer"
 import DashboardBarContainer from "./DashboardBarContainer"
 import DashboardTimeline from "./DashboardTimeline"
 import * as Service from "./DashboardService"
+import * as LocalStorageService from "./DashboardLocalStorageService"
 
 export default {
   name: 'Dashboard',
@@ -39,6 +40,7 @@ export default {
   data() {
     return {
       service: Service,
+      localStorageService: LocalStorageService,
       queue: {},
       response: {},
       running: false,
@@ -58,16 +60,25 @@ export default {
       return [this.timelineFilaAxisAndSeriesAsArray, this.timelineEnvioAxisAndSeriesAsArray]
     }
   },
+  created() {
+    this.updateFullState(this.localStorageService.getFromLocalStorage())
+  },
+  methods: {
+    updateFullState(data) {
+      this.queue =  data.queue
+      this.response =  data.response
+      this.running =  data.running
+      this.tables =  data.tables
+      this.timelineEnvio =  data.timelineEnvio
+      this.timelineFila =  data.timelineFila
+      this.timelineEnvio.splice()
+      this.timelineFila.splice()
+    }
+  },
   mounted() {
     this.$jsonp("http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=01-01-2010&dataFinal=31-12-2020").then(data => {
-        this.queue =  data.queue
-        this.response =  data.response
-        this.running =  data.running
-        this.tables =  data.tables
-        this.timelineEnvio =  data.timelineEnvio
-        this.timelineFila =  data.timelineFila
-        this.timelineEnvio.splice()
-        this.timelineFila.splice()
+      this.updateFullState(data)
+      this.localStorageService.saveToLocalStorage(data)
     })
   }
 }
@@ -97,7 +108,7 @@ section {
   margin: 10px;
   border-radius: 10px;
   background: white;
-  padding-top: 10px; 
+  padding-top: 10px;
 }
 
 .left {
