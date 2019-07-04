@@ -41,6 +41,8 @@ export default {
   margin: 0 10px;
   border: 2px solid var(--color-white-faded);
   padding: 10px;
+  background: white;
+  border-radius: 10px;
 }
 
 .table span {

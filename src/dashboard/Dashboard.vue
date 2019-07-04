@@ -1,18 +1,18 @@
 <template id="dashboard">
   <section>
-    <div class="dashboard-bar-container-wrapper">
+    <div class="dashboard-bar-container-wrapper shadow">
       <h3>Queue (EFW991)</h3>
       <dashboard-bar-container :data="queue" :type="'queue'"/>
     </div>
-    <div class="dashboard-bar-container-wrapper">
+    <div class="dashboard-bar-container-wrapper shadow">
       <h3>Response (EFW992)</h3>
       <dashboard-bar-container :data="response" :type="'response'"/>
     </div>
     <div class="dashboard-timeline-wrapper">
-      <dashboard-timeline :timelineTitle="'Processamento da Fila de Envio'" 
-                          :seriesDataFila="timelineFilaAxisAndSeriesAsArray" 
-                          :seriesDataRequest="timelineEnvioAxisAndSeriesAsArray" 
-                          :nameSerieFila="'Inserts por Minuto'" 
+      <dashboard-timeline :timelineTitle="'Processamento da Fila de Envio'"
+                          :seriesDataFila="timelineFilaAxisAndSeriesAsArray"
+                          :seriesDataRequest="timelineEnvioAxisAndSeriesAsArray"
+                          :nameSerieFila="'Inserts por Minuto'"
                           :nameSerieRequest="'Requisições por Minuto'"/>
     </div>
    <!-- <div class="dashboard-timeline-wrapper right">
@@ -82,15 +82,22 @@ section {
 }
 
 .dashboard-bar-container-wrapper {
-  width: 50%;
+  width: calc(50% - 20px);
   padding: 10px;
   float: left;
+  margin: 10px;
+  border-radius: 10px;
+  background: white;
 }
 
 .dashboard-timeline-wrapper {
-  width: 99%;
+  width: calc(100% - 20px);
   height: 500px;
   float: left;
+  margin: 10px;
+  border-radius: 10px;
+  background: white;
+  padding-top: 10px; 
 }
 
 .left {

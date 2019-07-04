@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-bar-container shadow">
+  <div class="dashboard-bar-container">
     <dashboard-bar :results="data.results" :dataType="type" :selectFn="select"/>
     <dashboard-details :details="details" :show="showDetails"/>
   </div>
@@ -23,8 +23,10 @@ export default {
       if(bar.statusCode != this.details.statusCode) {
         let status = this.data.results.find(result => result.statusCode == bar.statusCode)
         this.details = status
+        this.showDetails = true
+      } else {
+        this.showDetails = !this.showDetails
       }
-      this.showDetails = !this.showDetails
     }
   },
   components: {
@@ -38,7 +40,6 @@ export default {
 
 .dashboard-bar-container {
   width: 100%;
-  background: var(--color-white-faded);
 }
 
 </style>

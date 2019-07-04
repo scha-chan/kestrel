@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-details" :class="{show}">
-    <h3>{{detailsTitle}}</h3>
+    <h3>{{details.status}}</h3>
     <table>
       <th :key="header" v-for="header in headers">{{header}}</th>
       <th></th>
@@ -50,6 +50,7 @@ export default {
   opacity: 0;
   display: none;
   transition: all 0.3s ease-out;
+  margin-top: 20px;
 }
 
 .show {
@@ -59,8 +60,13 @@ export default {
   display: block;
 }
 
+h3 {
+  margin: 15px 0px;
+}
+
 table {
   width: 100%;
+  padding: 0px 10px;
 }
 
 th {
