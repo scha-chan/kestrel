@@ -57,10 +57,13 @@ export default {
 }
 
 .bar-wrapper{
-  height: 60%;
+  min-height: 70px;
+  height: 100%;
+  max-height: 70px;
 }
 
 .legend-wrapper {
+  min-height: 70px;
   padding: 10px 0px;
 }
 

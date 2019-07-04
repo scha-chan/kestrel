@@ -1,8 +1,7 @@
 <template>
   <div class="dashboard-bar-container shadow">
     <dashboard-bar :results="data.results" :dataType="type" :selectFn="select"/>
-    <!-- <dashboard-details :details="details" :show="showDetails"/> -->
-    <dashboard-details :details="details" :show="true"/>
+    <dashboard-details :details="details" :show="showDetails"/>
   </div>
 </template>
 
@@ -21,13 +20,11 @@ export default {
   },
   methods: {
     select(bar) {
-      if(bar.statusCode == this.details.statusCode) {
-        this.showDetails = false
-      } else {
+      if(bar.statusCode != this.details.statusCode) {
         let status = this.data.results.find(result => result.statusCode == bar.statusCode)
         this.details = status
-        this.showDetails = true
       }
+      this.showDetails = !this.showDetails
     }
   },
   components: {

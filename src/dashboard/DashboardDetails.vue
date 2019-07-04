@@ -1,14 +1,17 @@
 <template>
   <div class="dashboard-details" :class="{show}">
+    <h3>{{detailsTitle}}</h3>
     <table>
       <th :key="header" v-for="header in headers">{{header}}</th>
       <th></th>
       <th></th>
-      <!-- <tr :key="endpoint.idEndpoint" v-for="endpoint in getDetails.endPoints"> -->
-      <tr :key="endpoint.idEndpoint" v-for="endpoint in endPoints">
-        <td :key="header" v-for="header in headers">{{endpoint[header]}}</td>
+      <tr :key="endpoint.idEndpoint" v-for="endpoint in getDetails.endPoints">
+        <td :key="header" :class="[headersClasses[header]]" v-for="header in headers">{{endpoint[header]}}</td>
         <td>
-          <img src="@/assets/images/search.svg">
+          <img src="@/assets/images/search.svg" title="Exibir detalhes">
+        </td>
+        <td>
+          <img src="@/assets/images/download.svg" title="Baixar relatório completo">
         </td>
       </tr>
     </table>
@@ -18,24 +21,16 @@
 <script>
 export default {
   name: "DashboardDetails",
-  props: ['details', 'show'],
+  props: ['details', 'show', 'detailsTitle'],
   data() {
     return {
       headers: ["idEndpoint","name","percent","total"],
-      endPoints: [
-                    {
-                        "idEndpoint": 4,
-                        "name": "Incluir/Alterar Delivery Window",
-                        "percent": 98.86,
-                        "total": 29020
-                    },
-                    {
-                        "idEndpoint": 10,
-                        "name": "Incluir/Alterar Product Inclusion",
-                        "percent": 1.14,
-                        "total": 335
-                    }
-                ]
+      headersClasses: {
+        idEndpoint: "one-half",
+        name: "four-half",
+        percent: "one-half",
+        total: "one-half"
+      }
     }
   },
   computed: {
@@ -54,7 +49,7 @@ export default {
   visibility: hidden;
   opacity: 0;
   display: none;
-  transition: all 2s ease-out;
+  transition: all 0.3s ease-out;
 }
 
 .show {
@@ -78,6 +73,14 @@ tr {
 
 tr:nth-child(even) {
   background: var(--color-white-faded);
+}
+
+td img {
+  width: 15px;
+}
+
+td img:hover {
+  cursor: pointer;
 }
 
 td {

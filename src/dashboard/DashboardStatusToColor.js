@@ -4,13 +4,13 @@ export const queue = {
   "3": "#d7831d ", // RETRY - LARANJA
   "4": "#42d71d", // CONCLUÍDO - VERDE
   "5": "#f17863", // TIMEOUT - VERMELHO
-  "6": "#d71d1d", // ERRO - VERMELHO
-  "7": "#8c1f17", // ERRO ENDPOINT - VERMELHO
+  "6": "#8c1f17", // ERRO - VERMELHO
+  "7": "#d71d1d", // ERRO ENDPOINT - VERMELHO
 }
 
 export const response = {
   "1": "#42d71d", // SUCESSO - VERDE
-  "2": "#d71d1d", // CLIENT ERROR - VERMELHO
-  "3": "#8c1f17 ", // SERVER ERROR - VERMELHO
+  "2": "#8c1f17", // CLIENT ERROR - VERMELHO
+  "3": "#d71d1d ", // SERVER ERROR - VERMELHO
   "4": "#d7d41d", // OUTROS - AMARELO
 }
