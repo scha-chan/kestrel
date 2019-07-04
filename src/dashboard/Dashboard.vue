@@ -60,9 +60,6 @@ export default {
       return [this.timelineFilaAxisAndSeriesAsArray, this.timelineEnvioAxisAndSeriesAsArray]
     }
   },
-  created() {
-    this.updateFullState(this.localStorageService.getFromLocalStorage())
-  },
   methods: {
     updateFullState(data) {
       this.queue =  data.queue
@@ -74,6 +71,9 @@ export default {
       this.timelineEnvio.splice()
       this.timelineFila.splice()
     }
+  },
+  created() {
+    this.updateFullState(this.localStorageService.getFromLocalStorage())
   },
   mounted() {
     this.$jsonp("http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=01-01-2010&dataFinal=31-12-2020").then(data => {
