@@ -1,7 +1,8 @@
 //TODO IMPLEMENTAR NO VUEX
-
+import moment from "moment"
 
 export const saveToLocalStorage = data => {
+  localStorage.lastUpdated = moment().format('MMMM Do YYYY, h:mm:ss a')
   localStorage.queue =  JSON.stringify(data.queue)
   localStorage.response =  JSON.stringify(data.response)
   localStorage.running =  JSON.stringify(data.running)
@@ -12,6 +13,7 @@ export const saveToLocalStorage = data => {
 
 export const getFromLocalStorage = () => {
   return {
+    lastUpdated: localStorage.lastUpdated,
     queue: localStorage.queue ? JSON.parse(localStorage.queue) : {},
     response: localStorage.response ? JSON.parse(localStorage.response) : {},
     running: localStorage.running ? JSON.parse(localStorage.running) : false,

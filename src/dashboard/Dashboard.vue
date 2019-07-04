@@ -1,5 +1,8 @@
 <template id="dashboard">
   <section>
+    <div class="last-updated">
+      Atualizado em: {{lastUpdated}}
+    </div>
     <div class="dashboard-bar-container-wrapper shadow">
       <h3>Queue (EFW991)</h3>
       <dashboard-bar-container :data="queue" :type="'queue'"/>
@@ -29,6 +32,7 @@ import DashboardBarContainer from "./DashboardBarContainer"
 import DashboardTimeline from "./DashboardTimeline"
 import * as Service from "./DashboardService"
 import * as LocalStorageService from "./DashboardLocalStorageService"
+import moment from "moment"
 
 export default {
   name: 'Dashboard',
@@ -41,6 +45,7 @@ export default {
     return {
       service: Service,
       localStorageService: LocalStorageService,
+      lastUpdated: '',
       queue: {},
       response: {},
       running: false,
@@ -62,6 +67,7 @@ export default {
   },
   methods: {
     updateFullState(data) {
+      this.lastUpdated = data.lastUpdated || moment().format('MMMM Do YYYY, h:mm:ss a')
       this.queue =  data.queue
       this.response =  data.response
       this.running =  data.running
@@ -109,6 +115,11 @@ section {
   border-radius: 10px;
   background: white;
   padding-top: 10px;
+}
+
+.last-updated {
+  margin-left: 10px;
+  font-size: 11px;
 }
 
 .left {

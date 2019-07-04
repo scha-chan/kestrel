@@ -57,7 +57,16 @@ export default {
 }
 
 .bar-wrapper{
-  height: 70px;
+  height: 50px;
+  padding-bottom: 10px;
+}
+
+.bar:first-child {
+  border-radius: 6px 0px 0px 6px;
+}
+
+.bar:last-child {
+  border-radius: 0px 6px 6px 0px;
 }
 
 .legend-wrapper {
