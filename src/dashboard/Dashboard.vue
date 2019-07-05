@@ -1,7 +1,9 @@
 <template id="dashboard">
   <section>
+    <loading-pane :show="isLoading"/>
     <div class="bot-status">
       <dashboard-meta-data :running="true"
+                           :reloadCallback="loadData"
                            :lastUpdated="lastUpdated"
                            :selectDataCallback="updateData"
                            :dataInicial="dataInicial"
@@ -29,11 +31,12 @@
 
 <script>
 import TablesContainer from "./TablesContainer"
-import DashboardBarContainer from "./DashboardBarContainer"
+import DashboardBarContainer from "./dashboardbar/DashboardBarContainer"
 import DashboardTimeline from "./DashboardTimeline"
 import DashboardMetaData from "./DashboardMetaData"
 import * as Service from "./DashboardService"
 import * as LocalStorageService from "./DashboardLocalStorageService"
+import LoadingPane from "../components/LoadingPane"
 import moment from "moment"
 
 export default {
@@ -42,7 +45,8 @@ export default {
     'tables-container': TablesContainer,
     'dashboard-bar-container': DashboardBarContainer,
     'dashboard-timeline': DashboardTimeline,
-    'dashboard-meta-data': DashboardMetaData
+    'dashboard-meta-data': DashboardMetaData,
+    'loading-pane': LoadingPane
   },
   data() {
     return {
@@ -56,7 +60,8 @@ export default {
       running: false,
       tables: [],
       timelineEnvio: [],
-      timelineFila: []
+      timelineFila: [],
+      isLoading: false
     }
   },
   computed: {
@@ -84,6 +89,15 @@ export default {
       this.timelineFila =  data.timelineFila
       this.timelineEnvio.splice()
       this.timelineFila.splice()
+    },
+    loadData() {
+      this.isLoading = true
+      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
+        this.updateFullState(data)
+        this.localStorageService.saveToLocalStorage(data)
+      }).finally(() => [
+        this.isLoading = false
+      ])
     }
   },
   created() {
@@ -93,10 +107,7 @@ export default {
     this.dataFinal = hoje
   },
   mounted() {
-    this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
-      this.updateFullState(data)
-      this.localStorageService.saveToLocalStorage(data)
-    })
+    this.loadData()
   }
 }
 </script>
