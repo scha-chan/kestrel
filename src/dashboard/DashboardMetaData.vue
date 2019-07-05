@@ -9,11 +9,11 @@
       <input type="date" name="data final" @input="inputDataFinal" :value="getDataFinal">
     </div>
     <button type="button" name="button" @click="reloadCallback">RECARREGAR</button>
-    <div class="is-running right-not-clear" :class="{success: running}">
-      {{running ? "rodando" : "parado"}}
-    </div>
     <div class="last-updated right-not-clear">
       Atualizado em: {{lastUpdated}}
+    </div>
+    <div class="is-running right-not-clear" :class="{success: running}">
+      {{running ? "rodando" : "parado"}}
     </div>
   </div>
 </template>
@@ -51,7 +51,8 @@ export default {
 
 .dashboard-meta-data {
   width: 100%;
-  height: 100%;
+  height: fit-content;
+  display: flex;
 }
 
 .is-running {
@@ -65,20 +66,19 @@ export default {
 }
 
 .last-updated {
-  height: 100%;
+  margin-left: auto;
   align-items: center;
   display: flex;
   margin-right: 12px;
 }
 
 .date-input-wrapper {
-  height: 100%;
+  height: 30px;
   margin-right: 12px;
 }
 
 button {
   margin: 0px 10px;
-  height: 100%;
   padding: 5px 15px;
   font-size: 14px;
 }

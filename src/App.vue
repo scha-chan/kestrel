@@ -10,6 +10,7 @@
 import "./assets/styles/index.css"
 import "./assets/styles/scroll.css"
 import "./assets/styles/input.css"
+import "./assets/styles/width.css"
 
 export default {
   name: 'App',

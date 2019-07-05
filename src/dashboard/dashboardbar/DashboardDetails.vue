@@ -45,7 +45,7 @@ export default {
         this.$http.get(data.caminhoCsv).then(response => {
           fileDownload(response.body, `${this.details.status}:${endpoint.idEndpoint} - ${endpoint.name}.csv`)
         }).finally(() => this.setLoading(false))
-      }).catch(err => this.setLoading(false))
+      }).catch(() => this.setLoading(false))
     }
   },
   computed: {
