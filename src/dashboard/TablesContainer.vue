@@ -38,7 +38,7 @@ export default {
 
 .table {
   min-width: 200px;
-  margin: 0 10px;
+  margin: 10px 10px;
   border: 2px solid var(--color-white-faded);
   padding: 10px;
   background: white;

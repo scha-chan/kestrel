@@ -1,7 +1,7 @@
 <template id="dashboard">
   <section>
     <div class="bot-status">
-      <dashboard-meta-data :running="running"
+      <dashboard-meta-data :running="true"
                            :lastUpdated="lastUpdated"
                            :selectDataCallback="updateData"
                            :dataInicial="dataInicial"

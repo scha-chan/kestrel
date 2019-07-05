@@ -1,6 +1,15 @@
 <template>
   <div class="dashboard-details" :class="{show}">
-    <h3>{{details.status}}</h3>
+    <div class="meta-header">
+      <div class="meta-header-title left">
+        <span>{{details.status}}</span>
+      </div>
+      <div class="meta-data right">
+        <span>Yo Yo Yo Yo</span>
+        <span>Yo Yo Yo Yo</span>
+        <span>Yo Yo Yo Yo</span>
+      </div>
+    </div>
     <table>
       <th :key="header" v-for="header in headers">{{header}}</th>
       <th></th>
@@ -69,6 +78,23 @@ export default {
   height: auto;
   visibility: visible;
   display: block;
+}
+
+.meta-header {
+  width: 100%;
+  height: 20px;
+  margin: 10px 0px;
+}
+
+.meta-header-title {
+  font-size: 18px;
+  width: fit-content;
+}
+
+.meta-data {
+  height: 100%;
+  width: fit-content;
+  display: flex;
 }
 
 h3 {
