@@ -1,18 +1,49 @@
 <template>
   <div class="dashboard-meta-data">
-    <div class="is-running" :class="{success: running}">
-      {{running ? "RUNNING" : "STOPPED"}}
+    <div class="date-input-wrapper left-not-clear">
+      <label for="data inicial">Data inicial: </label>
+      <input type="date" name="data inicial" @input="inputDataInicial" :value="getDataInicial">
     </div>
-    <div class="last-updated">
+    <div class="date-input-wrapper left-not-clear">
+      <label for="data final">Data final: </label>
+      <input type="date" name="data final" @input="inputDataFinal" :value="getDataFinal">
+    </div>
+    <button type="button" name="button">RECARREGAR</button>
+    <div class="is-running right-not-clear" :class="{success: running}">
+      {{running ? "rodando" : "parado"}}
+    </div>
+    <div class="last-updated right-not-clear">
       Atualizado em: {{lastUpdated}}
     </div>
   </div>
 </template>
 
 <script>
+import moment from "moment"
+
 export default {
   name: 'DashboardMetaData',
-  props: ['running', 'selectDataCallback']
+  props: ['running', 'selectDataCallback', 'lastUpdated', 'dataInicial', 'dataFinal'],
+  methods: {
+    inputDataInicial(e) {
+      let value = e.target.value
+      let newData = moment(value).format("DD-MM-YYYY")
+      this.selectDataCallback(newData, 'dataInicial')
+    },
+    inputDataFinal(e) {
+      let value = e.target.value
+      let newData = moment(value).format("DD-MM-YYYY")
+      this.selectDataCallback(newData, 'dataFinal')
+    }
+  },
+  computed: {
+    getDataInicial() {
+      return moment(this.dataInicial, "DD-MM-YYYY").toISOString().slice(0,10)
+    },
+    getDataFinal() {
+      return moment(this.dataFinal, "DD-MM-YYYY").toISOString().slice(0,10)
+    }
+  }
 }
 </script>
 
@@ -23,11 +54,6 @@ export default {
   height: 100%;
 }
 
-.bot-status div {
-  float: left;
-  margin-right: 12px;
-}
-
 .is-running {
   font-weight: 600;
   padding: 5px;
@@ -35,12 +61,35 @@ export default {
   font-size: 16px;
   background: #d71d1d;
   color: white;
+  text-transform: uppercase;
 }
 
 .last-updated {
   height: 100%;
   align-items: center;
   display: flex;
+  margin-right: 12px;
+}
+
+.date-input-wrapper {
+  height: 100%;
+  margin-right: 12px;
+}
+
+button {
+  margin: 0px 10px;
+  height: 100%;
+  padding: 5px 15px;
+  font-size: 14px;
+}
+
+label {
+  font-size: 18px;
+}
+
+input {
+  height: 100%;
+  font-size: 16px;
 }
 
 </style>

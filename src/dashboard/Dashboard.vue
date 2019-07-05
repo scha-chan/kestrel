@@ -1,12 +1,11 @@
 <template id="dashboard">
   <section>
     <div class="bot-status">
-      <div class="is-running" :class="{success: running}">
-        {{running ? "RUNNING" : "STOPPED"}}
-      </div>
-      <div class="last-updated">
-        Atualizado em: {{lastUpdated}}
-      </div>
+      <dashboard-meta-data :running="running"
+                           :lastUpdated="lastUpdated"
+                           :selectDataCallback="updateData"
+                           :dataInicial="dataInicial"
+                           :dataFinal="dataFinal"/>
     </div>
     <div class="dashboard-bar-container-wrapper shadow">
       <h3>Queue (EFW991)</h3>
@@ -49,6 +48,8 @@ export default {
   },
   data() {
     return {
+      dataInicial: '',
+      dataFinal: '',
       service: Service,
       localStorageService: LocalStorageService,
       lastUpdated: '',
@@ -72,6 +73,9 @@ export default {
     }
   },
   methods: {
+    updateData(date, dateField) {
+      this[dateField] = date
+    },
     updateFullState(data) {
       this.lastUpdated = data.lastUpdated || moment().format('MMMM Do YYYY, h:mm:ss a')
       this.queue =  data.queue
@@ -86,9 +90,12 @@ export default {
   },
   created() {
     this.updateFullState(this.localStorageService.getFromLocalStorage())
+    let hoje = moment().format("DD-MM-YYYY")
+    this.dataInicial = hoje
+    this.dataFinal = hoje
   },
   mounted() {
-    this.$jsonp("http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=01-01-2010&dataFinal=31-12-2020").then(data => {
+    this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
       this.updateFullState(data)
       this.localStorageService.saveToLocalStorage(data)
     })
@@ -129,40 +136,10 @@ section {
 }
 
 .bot-status {
-  margin-left: 10px;
+  padding: 0px 10px;
   font-size: 14px;
   width: 100%;
   height: 30px;
-}
-
-.bot-status div {
-  float: left;
-  margin-right: 12px;
-}
-
-.is-running {
-  font-weight: 600;
-  padding: 5px;
-  border-radius: 10px;
-  font-size: 16px;
-  background: #d71d1d;
-  color: white;
-}
-
-.last-updated {
-  height: 100%;
-  align-items: center;
-  display: flex;
-}
-
-.left {
-  float: left;
-  clear: left;
-}
-
-.right {
-  float: right;
-  clear: right;
 }
 
 </style>

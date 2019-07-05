@@ -22,16 +22,16 @@ export default {
   height: fit-content;
   margin: 10px 0px;
 
-  display: flex;
+  /* display: flex;
   flex-direction: row;
-  overflow-x: auto;
-
-  /* display: flex;       // NO SCROLL
+  overflow-x: auto; */
+  /* NO SCROLL */
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   overflow: hidden;
-  overflow-y: auto; */
+  overflow-y: auto;
 
   padding-bottom: 10px;
 }

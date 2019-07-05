@@ -30,6 +30,24 @@
   background: #42d71d;
 }
 
+.left {
+  float: left;
+  clear: left;
+}
+
+.right {
+  float: right;
+  clear: right;
+}
+
+.right-not-clear {
+  float: right;
+}
+
+.left-not-clear {
+  float: left;
+}
+
 section {
   width: 100%;
   height: 100%;
