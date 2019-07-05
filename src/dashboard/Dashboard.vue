@@ -8,11 +8,9 @@
                            :dataFinal="dataFinal"/>
     </div>
     <div class="dashboard-bar-container-wrapper shadow">
-      <h3>Queue (EFW991)</h3>
       <dashboard-bar-container :data="queue" :type="'queue'"/>
     </div>
     <div class="dashboard-bar-container-wrapper shadow">
-      <h3>Response (EFW992)</h3>
       <dashboard-bar-container :data="response" :type="'response'"/>
     </div>
     <div class="dashboard-timeline-wrapper">
