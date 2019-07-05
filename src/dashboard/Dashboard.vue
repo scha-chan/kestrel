@@ -2,7 +2,7 @@
   <section>
     <loading-pane :show="isLoading"/>
     <div class="bot-status">
-      <dashboard-meta-data :running="true"
+      <dashboard-meta-data :running="running"
                            :reloadCallback="loadData"
                            :lastUpdated="lastUpdated"
                            :selectDataCallback="updateData"
