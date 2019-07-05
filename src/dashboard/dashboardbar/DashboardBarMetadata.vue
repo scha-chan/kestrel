@@ -5,7 +5,7 @@
     </div>
     <div class="metadata right">
       <span>Tamanho: {{data.sizeMB}}MB</span>
-      <span>{{data.totalFiles || 0}} Files</span>
+      <span v-if="data.totalFiles > 0">{{data.totalFiles || 0}} Files</span>
       <span>{{data.totalRecords || 0}} Registros</span>
     </div>
   </div>
