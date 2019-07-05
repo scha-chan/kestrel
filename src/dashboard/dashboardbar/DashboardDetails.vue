@@ -1,6 +1,9 @@
 <template>
   <div class="dashboard-details" :class="{show}">
-    <h3>{{details.status}}</h3>
+    <div class="download-csv">
+      <img src="@/assets/images/download.svg" title="Baixar relatório completo" @click="downloadCSV(0)">
+    </div>
+    <div class="dashboard-title">{{details.status}} <span>Total: {{details.totalRecords}}</span> </div>
     <table>
       <th :key="header" v-for="header in headers">{{header}}</th>
       <th></th>
@@ -11,7 +14,7 @@
           <img src="@/assets/images/search.svg" title="Exibir detalhes">
         </td>
         <td>
-          <img src="@/assets/images/download.svg" title="Baixar relatório completo" @click="downloadCSV(endpoint)">
+          <img src="@/assets/images/download.svg" title="Baixar relatório" @click="downloadCSV(endpoint)">
         </td>
       </tr>
     </table>
@@ -23,7 +26,7 @@ import fileDownload from "js-file-download"
 
 export default {
   name: "DashboardDetails",
-  props: ['details', 'show'],
+  props: ['details', 'show', 'setLoading'],
   data() {
     return {
       headers: ["idEndpoint","name","percent","total"],
@@ -37,11 +40,12 @@ export default {
   },
   methods: {
     downloadCSV(endpoint) {
+      this.setLoading(true)
       this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=2&dataInicial=01-01-2010&dataFinal=31-12-2020&statusCode=${this.details.statusCode}&idEndpoint=${endpoint.idEndpoint}`).then(data => {
         this.$http.get(data.caminhoCsv).then(response => {
           fileDownload(response.body, `${this.details.status}:${endpoint.idEndpoint} - ${endpoint.name}.csv`)
-        })
-      })
+        }).finally(() => this.setLoading(false))
+      }).catch(err => this.setLoading(false))
     }
   },
   computed: {
@@ -61,7 +65,15 @@ export default {
   opacity: 0;
   display: none;
   transition: all 0.3s ease-out;
-  margin-top: 20px;
+  position: relative;
+}
+
+.dashboard-details img {
+  width: 15px;
+}
+
+.dashboard-details img:hover {
+  cursor: pointer;
 }
 
 .show {
@@ -69,6 +81,26 @@ export default {
   height: auto;
   visibility: visible;
   display: block;
+}
+
+.download-csv {
+  position: absolute;
+  top: 0;
+  right: 15px;
+}
+
+.dashboard-title {
+  font-size: 20px;
+  padding: 0px 10px 10px 10px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid black;
+}
+
+.dashboard-title span{
+  font-size: 14px;
+  padding: 0px 5px;
+  margin-left: 5px;
+  border-left: 1px solid black;
 }
 
 h3 {
@@ -92,16 +124,12 @@ tr:nth-child(even) {
   background: var(--color-white-faded);
 }
 
-td img {
-  width: 15px;
-}
-
-td img:hover {
-  cursor: pointer;
-}
-
 td {
   min-width: 15%;
+}
+
+td img {
+  float: right;
 }
 
 </style>

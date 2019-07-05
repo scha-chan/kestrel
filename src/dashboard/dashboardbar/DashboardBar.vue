@@ -53,11 +53,9 @@ export default {
 
 .dashboard-bar {
   width: 100%;
-  height: 100px;
 }
 
 .bar-wrapper{
-  height: 50px;
   padding-bottom: 10px;
 }
 
@@ -70,21 +68,18 @@ export default {
 }
 
 .legend-wrapper {
-  min-height: 70px;
-  padding: 10px 0px;
-  margin-bottom: 20px;
+  min-height: 50px;
+  padding-bottom: 20px;
 }
 
 .wrapper {
   width: 100%;
-  float: left;
-  clear: left;
   display: flex;
   align-items: center;
 }
 
 .bar {
-  height: 100%;
+  height: 50px;
 }
 
 .bar:hover {

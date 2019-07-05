@@ -22,8 +22,9 @@ export default {
 
 .dashboard-bar-metadata {
   width: 100%;
-  height: 35px;
-  margin: 10px 0px;
+  display: flex;
+  padding: 10px 0px 20px;
+  align-items: center;
 }
 
 .title {
@@ -36,12 +37,7 @@ export default {
 
 .metadata span {
   padding: 0px 5px;
-  border-left: 1px solid black;
   border-right: 1px solid black;
-}
-
-.metadata span:first-child {
-  border-left: 0px solid white;
 }
 
 .metadata span:last-child {

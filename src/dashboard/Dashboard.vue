@@ -1,7 +1,7 @@
 <template id="dashboard">
   <section>
     <loading-pane :show="isLoading"/>
-    <div class="bot-status">
+    <div class="wrapper dashboard-meta-data-wrapper">
       <dashboard-meta-data :running="true"
                            :reloadCallback="loadData"
                            :lastUpdated="lastUpdated"
@@ -9,13 +9,17 @@
                            :dataInicial="dataInicial"
                            :dataFinal="dataFinal"/>
     </div>
-    <div class="dashboard-bar-container-wrapper shadow">
-      <dashboard-bar-container :data="queue" :type="'queue'"/>
+    <div class="wrapper dashboard-bar-container-wrapper shadow">
+      <dashboard-bar-container :data="queue"
+                               :type="'queue'"
+                               :setLoading="setLoading"/>
     </div>
-    <div class="dashboard-bar-container-wrapper shadow">
-      <dashboard-bar-container :data="response" :type="'response'"/>
+    <div class="wrapper dashboard-bar-container-wrapper shadow">
+      <dashboard-bar-container :data="response"
+                               :type="'response'"
+                               :setLoading="setLoading"/>
     </div>
-    <div class="dashboard-timeline-wrapper">
+    <div class="wrapper dashboard-timeline-wrapper">
       <dashboard-timeline :timelineTitle="'Processamento da Fila de Envio'"
                           :seriesDataFila="timelineFilaAxisAndSeriesAsArray"
                           :seriesDataRequest="timelineEnvioAxisAndSeriesAsArray"
@@ -90,6 +94,9 @@ export default {
       this.timelineEnvio.splice()
       this.timelineFila.splice()
     },
+    setLoading(bool) {
+      this.isLoading = bool
+    },
     loadData() {
       this.isLoading = true
       this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
@@ -116,13 +123,11 @@ export default {
 
 section {
   --max-width: 1600px;
-
-  /* risos risos */
-  /* background-image: url("https://media.giphy.com/media/9YlhdI9SSP0Qw/giphy.gif");
-  background-repeat: repeat; */
-  /* background-size: cover; */
-
   padding: 10px calc((calc(100% - var(--max-width))) / 2);
+}
+
+.wrapper {
+  margin: 10px;
 }
 
 .dashboard-bar-container-wrapper {
@@ -132,19 +137,19 @@ section {
   margin: 10px;
   border-radius: 10px;
   background: white;
+  height: fit-content;
 }
 
 .dashboard-timeline-wrapper {
   width: calc(100% - 20px);
   height: 500px;
   float: left;
-  margin: 10px;
   border-radius: 10px;
   background: white;
   padding-top: 10px;
 }
 
-.bot-status {
+.dashboard-meta-data-wrapper {
   padding: 0px 10px;
   font-size: 14px;
   width: 100%;
