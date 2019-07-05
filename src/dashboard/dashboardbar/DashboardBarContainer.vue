@@ -2,7 +2,7 @@
   <div class="dashboard-bar-container">
     <dashboard-bar-metadata :data="data"/>
     <dashboard-bar :results="data.results" :dataType="type" :selectFn="select"/>
-    <dashboard-details :details="details" :show="showDetails" :setLoading="setLoading"/>
+    <dashboard-details :details="details" :show="showDetails" :setLoading="setLoading" :option="option" :dataInicial="dataInicial" :dataFinal="dataFinal"/>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ import DashboardBarMetadata from "./DashboardBarMetadata"
 
 export default {
   name: 'DashboardBarContainer',
-  props: ['data', 'type', 'setLoading'],
+  props: ['data', 'type', 'setLoading', 'dataInicial', 'dataFinal', 'option'],
   data() {
     return {
       showDetails: false,

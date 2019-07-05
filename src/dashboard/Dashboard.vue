@@ -12,12 +12,18 @@
     <div class="wrapper dashboard-bar-container-wrapper shadow">
       <dashboard-bar-container :data="queue"
                                :type="'queue'"
-                               :setLoading="setLoading"/>
+                               :setLoading="setLoading"
+                               :dataInicial="dataInicial"
+                               :dataFinal="dataFinal"
+                               :option="2"/>
     </div>
     <div class="wrapper dashboard-bar-container-wrapper shadow">
       <dashboard-bar-container :data="response"
                                :type="'response'"
-                               :setLoading="setLoading"/>
+                               :setLoading="setLoading"
+                               :dataInicial="dataInicial"
+                               :dataFinal="dataFinal"
+                               :option="3"/>
     </div>
     <div class="wrapper dashboard-timeline-wrapper">
       <dashboard-timeline :timelineTitle="'Processamento da Fila de Envio'"
