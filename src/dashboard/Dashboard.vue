@@ -1,8 +1,8 @@
 <template id="dashboard">
   <section>
     <loading-pane :show="isLoading"/>
-    <div class="wrapper dashboard-meta-data-wrapper">
-      <dashboard-meta-data :running="true"
+    <div class="wrapper dashboard-meta-data-wrappe">
+      <dashboard-meta-data :running="running"
                            :reloadCallback="loadData"
                            :lastUpdated="lastUpdated"
                            :selectDataCallback="updateData"
