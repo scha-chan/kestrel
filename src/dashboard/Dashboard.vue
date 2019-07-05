@@ -32,9 +32,6 @@
                           :nameSerieFila="'Inserts por Minuto'"
                           :nameSerieRequest="'Requisições por Minuto'"/>
     </div>
-   <!-- <div class="dashboard-timeline-wrapper right">
-      <dashboard-timeline :timelineTitle="'Envio Request'" :seriesData="timelineEnvioAxisAndSeriesAsArray" :nameSerie="'Requisições por Minuto'"/>
-    </div> -->
     <tables-container :tables="tables"/>
   </section>
 </template>

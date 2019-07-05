@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="details-list-wrapper shadow">
-      <details-list :details="details"/>
+      <details-list :details="details" :retryCallback="removeFromList"/>
     </div>
   </section>
 </template>
@@ -15,10 +15,19 @@ export default {
   components: {
     'details-list': DetailsList
   },
-  computed: {
-    details() {
-      return mock()
+  data() {
+    return {
+      details: []
     }
+  },
+  methods: {
+    removeFromList(detail) {
+      let i = this.details.indexOf(detail)
+      this.details.splice(i, 1)
+    }
+  },
+  mounted() {
+    this.details = mock()
   }
 
 }

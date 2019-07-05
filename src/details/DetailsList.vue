@@ -6,6 +6,12 @@
       </div>
       <div class="row" :key="detail.id" v-for="detail in getDetails">
         <div class="cell" :title="detail[header]" :class="headersClasses[header]" :key="header" v-for="header in headers">{{detail[header]}}</div>
+        <div class="cell half centralized-content" title="Copiar ID">
+          <img src="@/assets/images/clipboards.svg" @click="copyToClipboard(detail.id)">
+        </div>
+        <div class="cell half centralized-content" title="Reenviar requisição">
+          <img src="@/assets/images/reload.svg" @click="retry(detail)">
+        </div>
       </div>
     </div>
   </div>
@@ -16,7 +22,7 @@ import * as DetailsListColumnClasses from "./DetailsListColumnClasses"
 
 export default {
   name: 'DetailsTable',
-  props: ['details'],
+  props: ['details', 'retryCallback'],
   data() {
     return {
       headersClasses: DetailsListColumnClasses,
@@ -31,10 +37,22 @@ export default {
         'horaRetornoDelta']
     }
   },
+  methods: {
+    retry(registro) {
+      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=5&idRegistro=${registro.id}`).finally(() => this.retryCallback(registro))
+    },
+    copyToClipboard(str) {
+      var el = document.createElement('textarea');
+      el.value = str;
+      el.setAttribute('readonly', '');
+      el.style = {position: 'absolute', left: '-9999px'};
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    }
+  },
   computed: {
-    // getColumnWidth(header) {
-    //   return this.columnsWidth[header]
-    // },
     getDetails() {
       return this.details || []
     }
@@ -70,6 +88,14 @@ export default {
   max-width: 10%;
   padding: 15px 5px;
   /* border: 1px solid black; */
+}
+
+img {
+  width: 15px;
+}
+
+img:hover {
+  cursor: pointer;
 }
 
 </style>
