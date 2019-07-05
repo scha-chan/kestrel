@@ -1,7 +1,12 @@
 <template id="dashboard">
   <section>
-    <div class="last-updated">
-      Atualizado em: {{lastUpdated}}
+    <div class="bot-status">
+      <div class="is-running" :class="{success: running}">
+        {{running ? "RUNNING" : "STOPPED"}}
+      </div>
+      <div class="last-updated">
+        Atualizado em: {{lastUpdated}}
+      </div>
     </div>
     <div class="dashboard-bar-container-wrapper shadow">
       <h3>Queue (EFW991)</h3>
@@ -21,7 +26,6 @@
    <!-- <div class="dashboard-timeline-wrapper right">
       <dashboard-timeline :timelineTitle="'Envio Request'" :seriesData="timelineEnvioAxisAndSeriesAsArray" :nameSerie="'Requisições por Minuto'"/>
     </div> -->
-
     <tables-container :tables="tables"/>
   </section>
 </template>
@@ -30,6 +34,7 @@
 import TablesContainer from "./TablesContainer"
 import DashboardBarContainer from "./DashboardBarContainer"
 import DashboardTimeline from "./DashboardTimeline"
+import DashboardMetaData from "./DashboardMetaData"
 import * as Service from "./DashboardService"
 import * as LocalStorageService from "./DashboardLocalStorageService"
 import moment from "moment"
@@ -39,7 +44,8 @@ export default {
   components: {
     'tables-container': TablesContainer,
     'dashboard-bar-container': DashboardBarContainer,
-    'dashboard-timeline': DashboardTimeline
+    'dashboard-timeline': DashboardTimeline,
+    'dashboard-meta-data': DashboardMetaData
   },
   data() {
     return {
@@ -95,6 +101,11 @@ export default {
 section {
   --max-width: 1600px;
 
+  /* risos risos */
+  /* background-image: url("https://media.giphy.com/media/9YlhdI9SSP0Qw/giphy.gif");
+  background-repeat: repeat; */
+  /* background-size: cover; */
+
   padding: 10px calc((calc(100% - var(--max-width))) / 2);
 }
 
@@ -117,9 +128,31 @@ section {
   padding-top: 10px;
 }
 
-.last-updated {
+.bot-status {
   margin-left: 10px;
-  font-size: 11px;
+  font-size: 14px;
+  width: 100%;
+  height: 30px;
+}
+
+.bot-status div {
+  float: left;
+  margin-right: 12px;
+}
+
+.is-running {
+  font-weight: 600;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 16px;
+  background: #d71d1d;
+  color: white;
+}
+
+.last-updated {
+  height: 100%;
+  align-items: center;
+  display: flex;
 }
 
 .left {
