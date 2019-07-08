@@ -27,7 +27,11 @@ export const createAllMinutesDay = () => {
 
 export const transformTimeline = arr => {
   return arr.reduce((acc, value) => {
-    acc[value['hora']] = value['times']
+    var hora = value['hora'];
+    if(hora < 999){
+      hora = "0" + hora;
+    }
+    acc[hora] = value['times']
     return acc
   }, {})
 }
