@@ -12,35 +12,32 @@ const cleanOb = arr => {
 
 const putZero = str => str < 10 ? '0' + str : str
 
+const prependFillWithZero = str => str.length < 4 ? `${prependFillWithZero('0' + str)}` : str
+
 export const createAllMinutesDay = () => {
-  let allMinutesDayArray = []
   let allMinutesDay = {}
   for (let hour = 0; hour < 24; hour++) {
     for (let minutes = 0; minutes < 60; minutes++) {
       let hourMinutes = `${putZero(hour)}${putZero(minutes)}`
       allMinutesDay[hourMinutes] = 0
-      allMinutesDayArray.push(hourMinutes)
     }
   }
-  return [allMinutesDay, allMinutesDayArray]
+  return allMinutesDay
 }
 
 export const transformTimeline = arr => {
   return arr.reduce((acc, value) => {
     var hora = value['hora'];
-    if(hora < 999){
-      hora = "0" + hora;
-    }
-    acc[hora] = value['times']
+    acc[prependFillWithZero(hora)] = value['times']
     return acc
   }, {})
 }
 
 export const mergeObjects = timeline => {
-  let allHoursWithMinutes = createAllMinutesDay()
-  let timelineWithZeroes = Object.assign(allHoursWithMinutes[0], transformTimeline(timeline))
-  return allHoursWithMinutes[1].map(time => {
-    return [hourToMilli(time), timelineWithZeroes[time]]
+  let allHoursMinutesWithValue = createAllMinutesDay()
+  let timelineWithValues = Object.assign(allHoursMinutesWithValue, transformTimeline(timeline))
+  return Object.getOwnPropertyNames(allHoursMinutesWithValue).sort().map(time => {
+    return [hourToMilli(time), timelineWithValues[time]]
   })
 }
 
