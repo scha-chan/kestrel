@@ -4,16 +4,6 @@ export const getData = () => {
   return Vue.http.get('http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=01-01-2010&dataFinal=31-12-2020')
 }
 
-const cleanOb = arr => {
-  if(arr.includes("__ob__")) {
-    arr.pop()
-  }
-}
-
-const putZero = str => str < 10 ? '0' + str : str
-
-const prependFillWithZero = str => str.length < 4 ? `${prependFillWithZero('0' + str)}` : str
-
 export const createAllMinutesDay = () => {
   let allMinutesDay = {}
   for (let hour = 0; hour < 24; hour++) {
@@ -42,35 +32,10 @@ export const mergeObjects = timeline => {
 }
 
 
-export const zippedObjToArray = arr => {
-  if(arr.length == 0) return
-  let fields = Object.getOwnPropertyNames(arr[0])
-  cleanOb(fields) // vue adds a __ob__ field for reactivity
-  let newArr = arr.map(obj => fields.map(field => obj[field]))
-  transformIndex(newArr, 0, hourToMilli)
-  return newArr
-}
-
-export const transformIndex = (arr, index, fn) => {
-  arr.forEach(obj => {
-    obj[index] = fn(obj[index])
-  })
-}
-
-export const hourToMilli = str => {
+const hourToMilli = str => {
   return new Date("11/21/1987 00:00:00").getTime() + (((""+str).substring(0,2) - 2) * 60 * 60 * 1000) + ((""+str).substring(2,4) * 60 * 1000)
 }
 
-export const unzipObj = arr => {
-  if(arr.length == 0) return
-  let fields = Object.getOwnPropertyNames(arr[0])
-  cleanOb(fields) // vue adds a __ob__ field for reactivity
-  let newArr = Array.from({length: fields.length}, () => [])
-  arr.forEach(obj => {
-    fields.forEach((field, index) => {
-      newArr[index].push("" + obj[field])
-    })
-  })
-  console.log(newArr)
-  return newArr
-}
+const putZero = str => str < 10 ? '0' + str : str
+
+const prependFillWithZero = str => str.length < 4 ? `${prependFillWithZero('0' + str)}` : str
