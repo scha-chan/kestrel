@@ -73,7 +73,7 @@ export default {
     },
     loadData() {
       this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${this.endpoint}&statusCode=${this.status}`).then(data => {
-        this.details = data
+        this.details = data.details
       })
     }
   },
@@ -112,6 +112,7 @@ section {
 .meta-data-wrapper {
   max-width: 1500px;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 </style>
