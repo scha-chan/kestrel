@@ -11,7 +11,7 @@
       <tr :key="endpoint.idEndpoint" v-for="endpoint in getDetails.endPoints">
         <td :key="header" :class="[headersClasses[header]]" v-for="header in headers">{{endpoint[header]}}</td>
         <td>
-          <img src="@/assets/images/search.svg" title="Exibir detalhes">
+          <img src="@/assets/images/search.svg" title="Exibir detalhes" @click="exibirDetalhes(endpoint)">
         </td>
         <td>
           <img src="@/assets/images/download.svg" title="Baixar relatório" @click="downloadCSV(endpoint)">
@@ -46,6 +46,13 @@ export default {
           fileDownload(response.body, `${this.details.status}:${endpoint.idEndpoint} - ${endpoint.name}.csv`)
         }).finally(() => this.setLoading(false))
       }).catch(() => this.setLoading(false))
+    },
+    exibirDetalhes(endpoint) {
+      this.$router.push({name:'Endpoint Details',params:{
+        field: 'queue',
+        status: this.details.statusCode,
+        endpoint: endpoint.idEndpoint
+      }})
     }
   },
   computed: {

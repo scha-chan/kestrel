@@ -9,10 +9,10 @@
       <input type="date" name="data final" @input="inputDataFinal" :value="getDataFinal">
     </div>
     <button type="button" name="button" @click="reloadCallback">RECARREGAR</button>
-    <div class="last-updated right-not-clear">
+    <div v-if="lastUpdated" class="last-updated right-not-clear">
       Atualizado em: {{lastUpdated}}
     </div>
-    <div class="is-running right-not-clear" :class="{success: running}">
+    <div v-if="!hideRunning" class="is-running right-not-clear" :class="{success: running}">
       {{running ? "rodando" : "parado"}}
     </div>
   </div>
@@ -23,7 +23,7 @@ import moment from "moment"
 
 export default {
   name: 'DashboardMetaData',
-  props: ['running', 'selectDataCallback', 'lastUpdated', 'dataInicial', 'dataFinal', 'reloadCallback'],
+  props: ['running', 'selectDataCallback', 'lastUpdated', 'dataInicial', 'dataFinal', 'reloadCallback', 'hideRunning'],
   methods: {
     inputDataInicial(e) {
       let value = e.target.value

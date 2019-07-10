@@ -40,7 +40,7 @@
 import TablesContainer from "./TablesContainer"
 import DashboardBarContainer from "./dashboardbar/DashboardBarContainer"
 import DashboardTimeline from "./DashboardTimeline"
-import DashboardMetaData from "./DashboardMetaData"
+import DashboardMetaData from "@/components/DashboardMetaData"
 import * as Service from "./DashboardService"
 import * as LocalStorageService from "./DashboardLocalStorageService"
 import LoadingPane from "../components/LoadingPane"

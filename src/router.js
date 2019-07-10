@@ -14,6 +14,7 @@ export default new Router({
     },{
       path: '/:field/:status/:endpoint',
       name: 'Endpoint Details',
+      props: true,
       component: () => import('@/details/Details')
     }
   ]

@@ -1,7 +1,7 @@
 <template>
   <div class="details-list">
     <div class="table">
-      <div class="row">
+      <div class="row header-row">
         <div class="cell centralized-content" :key="header" :class="headersClasses[header]" v-for="header in headers">{{header}}</div>
       </div>
       <div class="row" :key="detail.id" v-for="detail in getDetails">
@@ -75,6 +75,12 @@ export default {
   width: 100%;
   min-height: 30px;
   display: flex;
+}
+
+.header-row {
+  position: sticky;
+  top: 0;
+  background: white;
 }
 
 .row:nth-child(even) {
