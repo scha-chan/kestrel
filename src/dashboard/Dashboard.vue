@@ -1,6 +1,7 @@
 <template id="dashboard">
   <section>
     <loading-pane :show="isLoading"/>
+    <dashboard-modal :status="7" :endpoint="14"/>
     <div class="wrapper dashboard-meta-data-wrappe">
       <dashboard-meta-data :running="running"
                            :reloadCallback="loadData"
@@ -44,6 +45,7 @@ import DashboardMetaData from "@/components/DashboardMetaData"
 import * as Service from "./DashboardService"
 import * as LocalStorageService from "./DashboardLocalStorageService"
 import LoadingPane from "../components/LoadingPane"
+import Modal from "./Modal"
 import moment from "moment"
 
 export default {
@@ -53,7 +55,8 @@ export default {
     'dashboard-bar-container': DashboardBarContainer,
     'dashboard-timeline': DashboardTimeline,
     'dashboard-meta-data': DashboardMetaData,
-    'loading-pane': LoadingPane
+    'loading-pane': LoadingPane,
+    'dashboard-modal': Modal
   },
   data() {
     return {

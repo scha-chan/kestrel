@@ -1,6 +1,6 @@
 export const queue = {
   "1": "#d7d41d", // AGUARDANDO - AMARELO
-  "2": "#1d52d7", // EM PROGRSSO - AZUL
+  "2": "#1d52d7", // EM PROGRESSO - AZUL
   "3": "#d7831d ", // RETRY - LARANJA
   "4": "#42d71d", // CONCLUÍDO - VERDE
   "5": "#f17863", // TIMEOUT - VERMELHO

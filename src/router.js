@@ -11,11 +11,6 @@ export default new Router({
       path: '/',
       name: 'Dashboard B2B',
       component: () => import('@/dashboard/Dashboard')
-    },{
-      path: '/:field/:status/:endpoint',
-      name: 'Endpoint Details',
-      props: true,
-      component: () => import('@/details/Details')
     }
   ]
 })
