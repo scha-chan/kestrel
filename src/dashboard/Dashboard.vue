@@ -140,7 +140,7 @@ export default {
       data.orders.status.forEach(element => {
           if(element.records > 0){
             var arrayChartOrder = []
-            arrayChartOrder.push(element.desc, 25); 
+            arrayChartOrder.push(element.desc, element.percent); 
             this.seriesOrders.push(arrayChartOrder)
           }
       }); 
