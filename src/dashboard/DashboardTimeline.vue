@@ -55,7 +55,7 @@ export default {
         },
         title: {
             style: {
-              color: '#E0E0E3',
+              color: this.darkTheme ? '#E0E0E3' : '#2e2e2e',
               textTransform: 'uppercase',
               fontSize: '20px'
             },
@@ -64,7 +64,7 @@ export default {
         },
         subtitle: {
           style: {
-            color: '#E0E0E3',
+            color: this.darkTheme ? '#E0E0E3' : '#2e2e2e',
             textTransform: 'uppercase'
           }
         },
@@ -72,7 +72,7 @@ export default {
           gridLineColor: '#707073',
           labels: {
               style: {
-                  color: '#E0E0E3'
+                  color: this.darkTheme ? '#E0E0E3' : '#2e2e2e'
               }
           },
           lineColor: '#707073',
@@ -112,26 +112,26 @@ export default {
           },
           legend: {
               itemStyle: {
-                  color: '#E0E0E3'
+                  color: this.darkTheme ? '#E0E0E3' : '#2e2e2e'
               },
               itemHoverStyle: {
-                  color: '#FFF'
+                  color: this.darkTheme ? '#FFF' : '#000'
               },
               itemHiddenStyle: {
                   color: '#606063'
               }
-          },    
+          },
               labels: {
         style: {
             color: '#707073'
         }
     },
-    
+
         xAxis: {
             gridLineColor: '#707073',
             labels: {
               style: {
-                  color: '#E0E0E3'
+                  color: this.darkTheme ? '#E0E0E3' : '#2e2e2e'
               }
             },
             lineColor: '#707073',

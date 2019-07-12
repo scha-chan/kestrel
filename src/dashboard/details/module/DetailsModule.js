@@ -13,7 +13,9 @@ export const {
   },
 
   actions: {
-    []
+    [Actions.LOAD_DATA] : store => {
+
+    }
   },
 
   getters: {
