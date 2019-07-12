@@ -49,7 +49,7 @@ export default {
     },
     exibirDetalhes(endpoint) {
       this.openModal({
-        status: this.status,
+        status: this.details.statusCode,
         endpoint
       })
     }

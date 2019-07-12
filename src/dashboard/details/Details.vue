@@ -36,7 +36,7 @@ import moment from "moment"
 
 export default {
   name: 'Details',
-  props: ['status', 'endpoint'],
+  props: ['status', 'endpoint', 'details'],
   components: {
     'details-list': DetailsList,
     'loading-pane': LoadingPane,
@@ -48,7 +48,6 @@ export default {
       dataInicial: '',
       dataFinal: '',
       totalPerPage: 20,
-      details: [],
       currentPage: 1
     }
   },
@@ -71,7 +70,6 @@ export default {
     },
     updateDetailInList(detail, status) {
       detail.status = status
-
     },
     removeFromList(detail) {
       let i = this.details.indexOf(detail)
@@ -82,9 +80,9 @@ export default {
     },
     loadData() {
       if(this.endpoint && this.status) {
-        this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${this.endpoint}&statusCode=${this.status}`).then(data => {
-          this.details = data.details
-        })
+        // this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${this.endpoint}&statusCode=${this.status}`).then(data => {
+        //   this.details = data.details
+        // })
       }
     },
     resendAllDetails() {

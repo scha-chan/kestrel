@@ -1,7 +1,7 @@
 <template id="dashboard">
   <section>
     <loading-pane :show="isLoading"/>
-    <dashboard-modal :endpointWrapper="endpointWrapper" :show="modalOpen" :closeModal="closeModal"/>
+    <dashboard-modal :details="modalDetails" :endpointWrapper="endpointWrapper" :show="modalOpen" :closeModal="closeModal"/>
     <div class="wrapper dashboard-meta-data-wrappe">
       <dashboard-meta-data :running="running"
                            :reloadCallback="loadData"
@@ -64,7 +64,8 @@ export default {
     return {
       // modalOpen: false,
       // endpointWrapper: {},
-      modalOpen: true,
+      modalOpen: false,
+      modalDetails: [],
       endpointWrapper: {
         status: 7,
         endpoint: 14
@@ -104,6 +105,9 @@ export default {
     openModal(endpointWrapper) {
       this.modalOpen = true;
       this.modalEndpoint = endpointWrapper
+      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${endpointWrapper.endpoint.idEndpoint}&statusCode=${endpointWrapper.status}`).then(data => {
+        this.modalDetails = data.details
+      })
     },
     updateFullState(data) {
       this.lastUpdated = data.lastUpdated || moment().format('MMMM Do YYYY, h:mm:ss a')
@@ -124,9 +128,9 @@ export default {
       this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
         this.updateFullState(data)
         this.localStorageService.saveToLocalStorage(data)
-      }).finally(() => [
+      }).finally(() => {
         this.isLoading = false
-      ])
+      })
     }
   },
   created() {

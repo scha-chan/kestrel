@@ -17,13 +17,13 @@ export default {
   directives: {
      clickOutside: vClickOutside.directive
    },
-  props: ['show', 'endpointWrapper', 'closeModal'],
+  props: ['show', 'endpointWrapper', 'closeModal', 'details'],
   components: {
     'dashboard-details': Details
   },
   methods: {
-    onClickOutside() {
-      if(show) {
+    onClickOutside(e) {
+      if(this.show && e.target.title != "Exibir detalhes") {
         this.closeModal()
       }
     }
@@ -53,7 +53,7 @@ export default {
   display: none;
 }
 
-.modal .show {
+.modal.show {
   visibility: visible;
   opacity: 1;
   display: flex;
