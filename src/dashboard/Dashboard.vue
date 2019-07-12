@@ -1,7 +1,7 @@
 <template id="dashboard">
   <section>
     <loading-pane :show="isLoading"/>
-    <dashboard-modal :endpointWrapper="endpointWrapper" :show="modalOpen"/>
+    <dashboard-modal :endpointWrapper="endpointWrapper" :show="modalOpen" :closeModal="closeModal"/>
     <div class="wrapper dashboard-meta-data-wrappe">
       <dashboard-meta-data :running="running"
                            :reloadCallback="loadData"

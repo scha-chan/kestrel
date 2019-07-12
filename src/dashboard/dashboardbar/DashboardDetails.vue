@@ -26,7 +26,7 @@ import fileDownload from "js-file-download"
 
 export default {
   name: "DashboardDetails",
-  props: ['details', 'show', 'setLoading', 'option', 'dataInicial', 'dataFinal'],
+  props: ['details', 'show', 'setLoading', 'option', 'dataInicial', 'dataFinal', 'openModal'],
   data() {
     return {
       headers: ["idEndpoint","name","percent","total"],

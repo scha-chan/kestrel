@@ -23,7 +23,9 @@ export default {
   },
   methods: {
     onClickOutside() {
-      this.closeModal()
+      if(show) {
+        this.closeModal()
+      }
     }
   }
 
