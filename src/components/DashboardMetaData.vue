@@ -12,8 +12,9 @@
     <div v-if="lastUpdated" class="last-updated right-not-clear">
       Atualizado em: {{lastUpdated}}
     </div>
-    <div v-if="!hideRunning" class="is-running right-not-clear" :class="{success: running}">
-      {{running ? "rodando" : "parado"}}
+    <div v-if="!hideRunning" class="is-running right-not-clear tooltip" :class="[{success: running}, {executing: action != ''}]" @click="stopRun">
+      {{action != '' ? action : running ? "rodando" : "parado"}}
+      <span v-if="action == ''" class="tooltiptext">{{running ? "Clique para parar" : "Clique para rodar"}}</span>
     </div>
   </div>
 </template>
@@ -23,7 +24,7 @@ import moment from "moment"
 
 export default {
   name: 'DashboardMetaData',
-  props: ['running', 'selectDataCallback', 'lastUpdated', 'dataInicial', 'dataFinal', 'reloadCallback', 'hideRunning'],
+  props: ['running', 'action', 'selectDataCallback', 'lastUpdated', 'dataInicial', 'dataFinal', 'reloadCallback', 'hideRunning', 'stopRun'],
   methods: {
     inputDataInicial(e) {
       let value = e.target.value
@@ -63,6 +64,7 @@ export default {
   background: #d71d1d;
   color: white;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .last-updated {
@@ -90,6 +92,32 @@ label {
 input {
   height: 100%;
   font-size: 16px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 
 </style>

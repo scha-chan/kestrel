@@ -4,7 +4,9 @@
     <dashboard-modal :details="modalDetails" :endpointWrapper="endpointWrapper" :show="modalOpen" :closeModal="closeModal"/>
     <div class="wrapper dashboard-meta-data-wrappe">
       <dashboard-meta-data :running="running"
+                           :action="action"
                            :reloadCallback="loadData"
+                           :stopRun="stopRun"
                            :lastUpdated="lastUpdated"
                            :selectDataCallback="updateData"
                            :dataInicial="dataInicial"
@@ -78,6 +80,7 @@ export default {
       queue: {},
       response: {},
       running: false,
+      action: '',
       tables: [],
       timelineEnvio: [],
       timelineFila: [],
@@ -114,6 +117,7 @@ export default {
       this.queue =  data.queue
       this.response =  data.response
       this.running =  data.running
+      this.action = ''
       this.tables =  data.tables
       this.timelineEnvio =  data.timelineEnvio
       this.timelineFila =  data.timelineFila
@@ -131,6 +135,14 @@ export default {
       }).finally(() => {
         this.isLoading = false
       })
+    },
+    stopRun(){
+      this.isLoading = false
+      this.action = 'Executing'
+      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=7`).then(data => {
+      }).finally(() => [
+        this.isLoading = false
+      ])
     }
   },
   created() {
