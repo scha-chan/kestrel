@@ -1,5 +1,10 @@
 <template>
   <section>
+    <loading-pane :show="isLoading"/>
+    <div class="title-wrapper">
+      <span>{{statusTitle}}</span>
+      <button type="button" name="button" @click="resendAllDetails">REENVIAR TODOS</button>
+    </div>
     <div class="meta-data-wrapper">
       <meta-data
       :selectDataCallback="updateData"
@@ -36,7 +41,7 @@ import moment from "moment"
 
 export default {
   name: 'Details',
-  props: ['status', 'endpoint', 'details'],
+  props: ['status', 'endpoint', 'details', 'loadDetailsFn', 'statusTitle', 'notifyDetailsChange'],
   components: {
     'details-list': DetailsList,
     'loading-pane': LoadingPane,
@@ -45,10 +50,12 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       dataInicial: '',
       dataFinal: '',
       totalPerPage: 20,
-      currentPage: 1
+      currentPage: 1,
+      currentRequests: []
     }
   },
   computed: {
@@ -64,8 +71,9 @@ export default {
       this[dateField] = date
     },
     resendRequest(detail) {
-      return this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=5&idRegistro=${detail.id}`).then(() => {
-        this.updateDetailInList(detail, status)
+      return this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=5&idRegistro=${detail.id}`).then(data => {
+        detail.statusReenvio = data.status
+        this.notifyDetailsChange()
       })
     },
     updateDetailInList(detail, status) {
@@ -80,12 +88,16 @@ export default {
     },
     loadData() {
       if(this.endpoint && this.status) {
-        // this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${this.endpoint}&statusCode=${this.status}`).then(data => {
-        //   this.details = data.details
-        // })
+        this.isLoading = true
+        this.loadDetailsFn(this.dataInicial, this.dataFinal, this.endpoint, this.status)
+        .finally(() => {
+          this.isLoading = false
+        })
       }
     },
     resendAllDetails() {
+      this.isLoading = true
+      this.detailsToBeResend = JSON.parse(JSON.stringify(this.details))
       this.resendTillLast()
       this.resendTillLast()
       this.resendTillLast()
@@ -93,15 +105,22 @@ export default {
       this.resendTillLast()
     },
     resendTillLast() {
-      if(this.length == 0) {
+      if(this.detailsToBeResend.length == 0) {
+        if(this.currentRequests.length == 0) {
+          this.isLoading = false
+        }
         return
       }
-      let detail = this.details.pop()
-      this.resendRequest(detail).then(this.resendTillLast)
+      let detail = this.detailsToBeResend.pop()
+      let request = this.resendRequest(detail)
+      this.currentRequests.push(request)
+      request.then(() => {
+        this.currentRequests.pop()
+        this.resendTillLast()
+      })
     }
   },
   created() {
-    this.loadData()
     let hoje = moment().format("DD-MM-YYYY")
     this.dataInicial = hoje
     this.dataFinal = hoje
@@ -115,7 +134,27 @@ section {
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-top: 50px;
+  padding: 20px 0px;
+  position: relative;
+}
+
+.title-wrapper {
+  font-size: 32px;
+}
+
+.title-wrapper {
+  width: 100%;
+  max-width: 1500px;
+  margin: 10px 0px;
+}
+
+.title-wrapper button {
+  float: right;
+  margin: 0px 10px;
+  padding: 5px 15px;
+  font-size: 14px;
+  color: white;
+  background: #2b40e0;
 }
 
 .details-list-wrapper {

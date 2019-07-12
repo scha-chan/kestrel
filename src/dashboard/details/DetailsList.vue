@@ -4,14 +4,20 @@
       <div class="row header-row">
         <div class="cell centralized-content" :key="header" :class="headersClasses[header]" v-for="header in headers">{{header}}</div>
       </div>
-      <div class="row" :key="detail.id" v-for="detail in getDetails">
+      <div class="row" :key="detail.id" v-for="detail in getDetails" :class="{
+        success: detailResendSuccess(detail),
+        error: detailResendError(detail)
+        }">
         <div class="cell" :title="detail[header]" :class="headersClasses[header]" :key="header" v-for="header in headers">{{detail[header]}}</div>
         <div class="cell half centralized-content" title="Copiar ID">
           <img v-if="darkTheme" src="@/assets/images/clipboards-white.svg" @click="copyToClipboard(detail.id)">
           <img v-else src="@/assets/images/clipboards.svg" @click="copyToClipboard(detail.id)">
         </div>
-        <div class="cell half centralized-content" title="Reenviar requisição">
-          <img v-if="darkTheme" src="@/assets/images/reload-white.svg" @click="retry(detail)">
+        <div class="cell half centralized-content" :title="detailResendSuccess(detail) ? 'Sucesso' : 'Reenviar requisição'">
+          <img v-if="detailResendSuccess(detail) && !darkTheme" :class="{nohover: detailResendSuccess(detail)}" src="@/assets/images/success.svg">
+          <img v-else-if="detailResendSuccess(detail) && darkTheme" :class="{nohover: detailResendSuccess(detail)}" src="@/assets/images/success-white.svg">
+
+          <img v-else-if="darkTheme" src="@/assets/images/reload-white.svg" @click="retry(detail)">
           <img v-else src="@/assets/images/reload.svg" @click="retry(detail)">
         </div>
       </div>
@@ -43,7 +49,7 @@ export default {
   },
   methods: {
     retry(registro) {
-      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=5&idRegistro=${registro.id}`).finally(() => this.retryCallback(registro))
+      this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=5&idRegistro=${registro.id}`).finally(() => this.retryCallback(registro))
     },
     copyToClipboard(str) {
       var el = document.createElement('textarea');
@@ -60,6 +66,12 @@ export default {
     ...mapGetters({
       darkTheme: Getters.IS_DARK_THEME
     }),
+    detailResendSuccess() {
+      return detail => detail.statusReenvio && detail.statusReenvio.success
+    },
+    detailResendError() {
+      return detail => detail.statusReenvio && !detail.statusReenvio.success
+    },
     getDetails() {
       return this.details || []
     }
@@ -115,6 +127,26 @@ img {
 
 img:hover {
   cursor: pointer;
+}
+
+.nohover:hover {
+  cursor: default;
+}
+
+.success {
+  background: #c3e6cb !important;
+}
+
+.success:nth-child(even) {
+  background: #d4edda !important;
+}
+
+.error {
+  background: #f5c6cb !important;
+}
+
+.error:nth-child(even) {
+  background: #f8d7da !important;
 }
 
 </style>

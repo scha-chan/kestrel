@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 export const getData = () => {
-  return Vue.http.get('http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=01-01-2010&dataFinal=31-12-2020')
+  return Vue.http.get('http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=01-01-2010&dataFinal=31-12-2020')
 }
 
 export const createAllMinutesDay = () => {

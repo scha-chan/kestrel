@@ -46,15 +46,17 @@ export default {
   methods: {
     downloadCSV(endpoint) {
       this.setLoading(true)
-      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=${this.option}&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&statusCode=${this.details.statusCode}&idEndpoint=${endpoint.idEndpoint}`).then(data => {
+      this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=${this.option}&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&statusCode=${this.details.statusCode}&idEndpoint=${endpoint.idEndpoint}`).then(data => {
         this.$http.get(data.caminhoCsv).then(response => {
           fileDownload(response.body, `${this.details.status}:${endpoint.idEndpoint} - ${endpoint.name}.csv`)
         }).finally(() => this.setLoading(false))
       }).catch(() => this.setLoading(false))
     },
     exibirDetalhes(endpoint) {
+      console.log("wtf")
       this.openModal({
         status: this.details.statusCode,
+        statusTitle: this.details.status,
         endpoint
       })
     }
