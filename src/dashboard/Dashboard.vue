@@ -37,12 +37,12 @@
                           :nameSerieFila="'Inserts por Minuto'"
                           :nameSerieRequest="'Requisições por Minuto'"/>
     </div>
-
     <div v-if="loadedOrders" class="wrapper dashboard-orders-wrapper">
       <dashboard-orders :seriesOrders="seriesOrders" :total="total"/>
     </div>
-
-    <tables-container :tables="tables"/>
+    <div class="tables-container-container" :class="{'has-orders': loadedOrders}">
+      <tables-container :tables="tables"/>
+    </div>
   </section>
 </template>
 
@@ -154,10 +154,10 @@ export default {
       data.orders.status.forEach(element => {
           if(element.records > 0){
             var arrayChartOrder = []
-            arrayChartOrder.push(element.desc, element.percent); 
+            arrayChartOrder.push(element.desc, element.percent);
             this.seriesOrders.push(arrayChartOrder)
           }
-      }); 
+      });
       if(data.orders.totalOrders > 0){
          this.loadedOrders = true
       }
@@ -170,7 +170,7 @@ export default {
       this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
         this.updateFullState(data)
         this.localStorageService.saveToLocalStorage(data)
-        this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=6&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {        
+        this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=6&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
           this.updateOrders(data)
       })}).finally(() => {
         this.isLoading = false
@@ -228,8 +228,9 @@ section {
 }
 
 .dashboard-orders-wrapper {
+  width: calc(50% - 20px);
   width: 50%;
-  height: 200px;
+  height: 410px;
   float: left;
   border-radius: 10px;
   background: var(--color-surface);
@@ -241,6 +242,18 @@ section {
   font-size: 14px;
   width: 100%;
   height: 30px;
+  float: right;
 }
+
+.tables-container-container {
+  width: calc(100% - 20px);
+  height: 410px;
+  float: left;
+}
+
+.tables-container-container.has-orders {
+  width: calc(50% - 20px);
+}
+
 
 </style>
