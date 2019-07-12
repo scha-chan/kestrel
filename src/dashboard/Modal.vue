@@ -2,6 +2,7 @@
   <div class="modal" :class="{show}">
     <div class="details-wrapper" v-click-outside="onClickOutside">
       <dashboard-details
+      :details="details"
       :endpoint="endpointWrapper.endpoint"
       :status="endpointWrapper.status"/>
     </div>

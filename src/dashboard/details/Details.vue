@@ -9,7 +9,7 @@
       :hideRunning="true"
       />
     </div>
-    <div class="details-list-wrapper shadow">
+    <div class="details-list-wrapper">
       <details-list :details="inPageDetails" :retryCallback="resendRequest"/>
     </div>
     <div class="pagination-wrapper">
@@ -128,6 +128,7 @@ section {
 }
 
 .pagination-wrapper {
+  margin-top: 20px;
   max-width: 1500px;
   width: 100%;
 }
@@ -158,6 +159,10 @@ section {
   justify-content: center;
   display: flex;
   background: var(--color-suface);
+}
+
+.pagination a:focus {
+  outline: none;
 }
 
 .pagination a:first-child {
