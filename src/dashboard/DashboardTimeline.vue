@@ -7,6 +7,9 @@
 <script>
 import {Chart} from 'highcharts-vue'
 
+import * as Getters from "@/store/StoreGetters"
+import {mapGetters} from "vuex"
+
 export default {
   name: 'DashboardTimeline',
   components: {
@@ -19,6 +22,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      darkTheme: Getters.IS_DARK_THEME
+    }),
     options() {
       return {
         // series: this.seriesData.map(series => {
@@ -36,7 +42,8 @@ export default {
           name: this.nameSerieRequest || ''
         }],
         chart: {
-          zoomType: 'x'
+          zoomType: 'x',
+          backgroundColor: this.darkTheme ? '#222326' : '#ffffff'
         },
         dataLabels: {
             enabled: false
@@ -50,7 +57,7 @@ export default {
         },
         xAxis: {
             type: 'datetime'
- 
+
         }
       }
     }

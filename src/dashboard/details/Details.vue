@@ -10,7 +10,7 @@
       />
     </div>
     <div class="details-list-wrapper shadow">
-      <details-list :details="inPageDetails" :retryCallback="removeFromList"/>
+      <details-list :details="inPageDetails" :retryCallback="resendRequest"/>
     </div>
     <div class="pagination-wrapper">
       <!-- <pagination :total="16" :currentPage="3"/> -->
@@ -29,17 +29,17 @@
 
 <script>
 import DetailsList from "./DetailsList"
-import Pagination from "./Pagination"
 import Paginate from "vuejs-paginate"
 import MetaData from "@/components/DashboardMetaData"
+import LoadingPane from "@/components/LoadingPane"
 import moment from "moment"
 
 export default {
   name: 'Details',
-  props: ['field', 'status', 'endpoint'],
+  props: ['status', 'endpoint'],
   components: {
     'details-list': DetailsList,
-    'pagination': Pagination,
+    'loading-pane': LoadingPane,
     'meta-data': MetaData,
     'paginate': Paginate
   },
@@ -64,6 +64,15 @@ export default {
     updateData(date, dateField) {
       this[dateField] = date
     },
+    resendRequest(detail) {
+      return this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=5&idRegistro=${detail.id}`).then(() => {
+        this.updateDetailInList(detail, status)
+      })
+    },
+    updateDetailInList(detail, status) {
+      detail.status = status
+
+    },
     removeFromList(detail) {
       let i = this.details.indexOf(detail)
       this.details.splice(i, 1)
@@ -72,9 +81,25 @@ export default {
       this.currentPage = page
     },
     loadData() {
-      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${this.endpoint}&statusCode=${this.status}`).then(data => {
-        this.details = data.details
-      })
+      if(this.endpoint && this.status) {
+        this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${this.endpoint}&statusCode=${this.status}`).then(data => {
+          this.details = data.details
+        })
+      }
+    },
+    resendAllDetails() {
+      this.resendTillLast()
+      this.resendTillLast()
+      this.resendTillLast()
+      this.resendTillLast()
+      this.resendTillLast()
+    },
+    resendTillLast() {
+      if(this.length == 0) {
+        return
+      }
+      let detail = this.details.pop()
+      this.resendRequest(detail).then(this.resendTillLast)
     }
   },
   created() {
@@ -92,13 +117,13 @@ section {
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-top: 150px;
+  padding-top: 50px;
 }
 
 .details-list-wrapper {
   max-width: 1500px;
   width: 100%;
-  background: white;
+  background: var(--color-surface);
   max-height: 80%;
   overflow: auto;
   padding:  0px 10px;
@@ -129,12 +154,12 @@ section {
 
 .pagination a {
   width: 50px;
-  border: 1px solid var(--color-white-faded);
+  border: 1px solid var(--color-background);
   text-align: center;
   align-items: center;
   justify-content: center;
   display: flex;
-  background: white;
+  background: var(--color-suface);
 }
 
 .pagination a:first-child {

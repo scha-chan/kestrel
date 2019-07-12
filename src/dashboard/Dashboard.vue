@@ -1,6 +1,7 @@
 <template id="dashboard">
   <section>
     <loading-pane :show="isLoading"/>
+    <dashboard-modal :endpointWrapper="endpointWrapper" :show="modalOpen" :closeModal="closeModal"/>
     <div class="wrapper dashboard-meta-data-wrappe">
       <dashboard-meta-data :running="running"
                            :action="action"
@@ -14,6 +15,7 @@
     <div class="wrapper dashboard-bar-container-wrapper shadow">
       <dashboard-bar-container :data="queue"
                                :type="'queue'"
+                               :openModal="openModal"
                                :setLoading="setLoading"
                                :dataInicial="dataInicial"
                                :dataFinal="dataFinal"
@@ -22,6 +24,7 @@
     <div class="wrapper dashboard-bar-container-wrapper shadow">
       <dashboard-bar-container :data="response"
                                :type="'response'"
+                               :openModal="openModal"
                                :setLoading="setLoading"
                                :dataInicial="dataInicial"
                                :dataFinal="dataFinal"
@@ -46,6 +49,7 @@ import DashboardMetaData from "@/components/DashboardMetaData"
 import * as Service from "./DashboardService"
 import * as LocalStorageService from "./DashboardLocalStorageService"
 import LoadingPane from "../components/LoadingPane"
+import Modal from "./Modal"
 import moment from "moment"
 
 export default {
@@ -55,10 +59,18 @@ export default {
     'dashboard-bar-container': DashboardBarContainer,
     'dashboard-timeline': DashboardTimeline,
     'dashboard-meta-data': DashboardMetaData,
-    'loading-pane': LoadingPane
+    'loading-pane': LoadingPane,
+    'dashboard-modal': Modal
   },
   data() {
     return {
+      // modalOpen: false,
+      // endpointWrapper: {},
+      modalOpen: true,
+      endpointWrapper: {
+        status: 7,
+        endpoint: 14
+      },
       dataInicial: '',
       dataFinal: '',
       service: Service,
@@ -88,6 +100,13 @@ export default {
   methods: {
     updateData(date, dateField) {
       this[dateField] = date
+    },
+    closeModal() {
+      this.modalOpen = false;
+    },
+    openModal(endpointWrapper) {
+      this.modalOpen = true;
+      this.modalEndpoint = endpointWrapper
     },
     updateFullState(data) {
       this.lastUpdated = data.lastUpdated || moment().format('MMMM Do YYYY, h:mm:ss a')
@@ -151,7 +170,7 @@ section {
   float: left;
   margin: 10px;
   border-radius: 10px;
-  background: white;
+  background: var(--color-surface);
   height: fit-content;
 }
 
@@ -160,7 +179,7 @@ section {
   height: 500px;
   float: left;
   border-radius: 10px;
-  background: white;
+  background: var(--color-surface);
   padding-top: 10px;
 }
 

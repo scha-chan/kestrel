@@ -80,11 +80,11 @@ export default {
 .header-row {
   position: sticky;
   top: 0;
-  background: white;
+  background: var(--color-suface);
 }
 
 .row:nth-child(even) {
-  background: var(--color-white-faded)
+  background: var(--background)
 }
 
 .cell {
