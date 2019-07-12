@@ -37,6 +37,11 @@
                           :nameSerieFila="'Inserts por Minuto'"
                           :nameSerieRequest="'Requisições por Minuto'"/>
     </div>
+
+    <div v-if="loadedOrders" class="wrapper dashboard-orders-wrapper">
+      <dashboard-orders :seriesOrders="orders"/>
+    </div>
+
     <tables-container :tables="tables"/>
   </section>
 </template>
@@ -45,6 +50,7 @@
 import TablesContainer from "./TablesContainer"
 import DashboardBarContainer from "./dashboardbar/DashboardBarContainer"
 import DashboardTimeline from "./DashboardTimeline"
+import DashboardOrders from "./DashboardOrders"
 import DashboardMetaData from "@/components/DashboardMetaData"
 import * as Service from "./DashboardService"
 import * as LocalStorageService from "./DashboardLocalStorageService"
@@ -58,6 +64,7 @@ export default {
     'tables-container': TablesContainer,
     'dashboard-bar-container': DashboardBarContainer,
     'dashboard-timeline': DashboardTimeline,
+    'dashboard-orders': DashboardOrders,
     'dashboard-meta-data': DashboardMetaData,
     'loading-pane': LoadingPane,
     'dashboard-modal': Modal
@@ -79,12 +86,14 @@ export default {
       lastUpdated: '',
       queue: {},
       response: {},
+      orders: {},
       running: false,
       action: '',
       tables: [],
       timelineEnvio: [],
       timelineFila: [],
-      isLoading: false
+      isLoading: false,
+      loadedOrders: false
     }
   },
   computed: {
@@ -119,10 +128,16 @@ export default {
       this.running =  data.running
       this.action = ''
       this.tables =  data.tables
-      this.timelineEnvio =  data.timelineEnvio
-      this.timelineFila =  data.timelineFila
+      this.timelineEnvio = data.timelineEnvio
+      this.timelineFila = data.timelineFila
       this.timelineEnvio.splice()
       this.timelineFila.splice()
+    },
+    updateOrders(data) {
+      this.orders = data.orders
+      if(this.orders.totalOrders == 0){
+         this.loadedOrders = true
+      }
     },
     setLoading(bool) {
       this.isLoading = bool
@@ -132,7 +147,9 @@ export default {
       this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
         this.updateFullState(data)
         this.localStorageService.saveToLocalStorage(data)
-      }).finally(() => {
+        this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=6&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {        
+          this.updateOrders(data)
+      })}).finally(() => {
         this.isLoading = false
       })
     },
@@ -181,6 +198,15 @@ section {
 .dashboard-timeline-wrapper {
   width: calc(100% - 20px);
   height: 500px;
+  float: left;
+  border-radius: 10px;
+  background: var(--color-surface);
+  padding-top: 10px;
+}
+
+.dashboard-orders-wrapper {
+  width: 50%;
+  height: 200px;
   float: left;
   border-radius: 10px;
   background: var(--color-surface);
