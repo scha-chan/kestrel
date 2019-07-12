@@ -19,6 +19,9 @@ export default {
     }
   },
   computed: {
+    hasDarkTheme() {
+      return document.getElementById('app').classList.contains('dark-theme')
+    },
     options() {
       return {
         // series: this.seriesData.map(series => {
@@ -36,7 +39,8 @@ export default {
           name: this.nameSerieRequest || ''
         }],
         chart: {
-          zoomType: 'x'
+          zoomType: 'x',
+          backgroundColor: this.hasDarkTheme ? '#222326' : '#ffffff'
         },
         dataLabels: {
             enabled: false
@@ -50,7 +54,7 @@ export default {
         },
         xAxis: {
             type: 'datetime'
- 
+
         }
       }
     }

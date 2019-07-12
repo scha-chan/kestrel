@@ -1,22 +1,32 @@
 <template>
-  <div class="modal">
-    <div class="details-wrapper">
+  <div class="modal" :class="{show}">
+    <div class="details-wrapper" v-click-outside="onClickOutside">
       <dashboard-details
-      :endpoint="endpoint"
-      :status="status"/>
+      :endpoint="endpointWrapper.endpoint"
+      :status="endpointWrapper.status"/>
     </div>
   </div>
 </template>
 
 <script>
 import Details from "./details/Details"
+import vClickOutside from 'v-click-outside'
 
 export default {
   name: 'Modal',
-  props: ['status', 'endpoint'],
+  directives: {
+     clickOutside: vClickOutside.directive
+   },
+  props: ['show', 'endpointWrapper', 'closeModal'],
   components: {
     'dashboard-details': Details
+  },
+  methods: {
+    onClickOutside() {
+      this.closeModal()
+    }
   }
+
 }
 </script>
 
@@ -30,15 +40,27 @@ export default {
   left: 0;
   z-index: 10;
   background: rgba(131, 133, 170, 0.7);
-  display: flex;
   justify-content: center;
   padding-top: 50px;
+  display: flex;
+
+  transition: all 0.5s ease-out;
+
+  visibility: hidden;
+  opacity: 0;
+  display: none;
+}
+
+.modal .show {
+  visibility: visible;
+  opacity: 1;
+  display: flex;
 }
 
 .details-wrapper {
   max-width: 1600px;
   width: 100%;
-  background: white;
+  background: var(--color-surface);
   max-height: 800px;
 }
 

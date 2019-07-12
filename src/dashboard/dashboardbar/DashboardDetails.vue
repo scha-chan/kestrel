@@ -48,11 +48,10 @@ export default {
       }).catch(() => this.setLoading(false))
     },
     exibirDetalhes(endpoint) {
-      this.$router.push({name:'Endpoint Details',params:{
-        field: 'queue',
-        status: this.details.statusCode,
-        endpoint: endpoint.idEndpoint
-      }})
+      this.openModal({
+        status: this.status,
+        endpoint
+      })
     }
   },
   computed: {
@@ -128,7 +127,7 @@ tr {
 }
 
 tr:nth-child(even) {
-  background: var(--color-white-faded);
+  background: var(--background);
 }
 
 td {

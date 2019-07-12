@@ -65,7 +65,7 @@ export default {
       this[dateField] = date
     },
     resendRequest(detail) {
-      return this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=5&idRegistro=${detail.id}`).then(response => {
+      return this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=5&idRegistro=${detail.id}`).then(() => {
         this.updateDetailInList(detail, status)
       })
     },
@@ -81,9 +81,11 @@ export default {
       this.currentPage = page
     },
     loadData() {
-      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${this.endpoint}&statusCode=${this.status}`).then(data => {
-        this.details = data.details
-      })
+      if(this.endpoint && this.status) {
+        this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${this.endpoint}&statusCode=${this.status}`).then(data => {
+          this.details = data.details
+        })
+      }
     },
     resendAllDetails() {
       this.resendTillLast()
@@ -121,7 +123,7 @@ section {
 .details-list-wrapper {
   max-width: 1500px;
   width: 100%;
-  background: white;
+  background: var(--color-surface);
   max-height: 80%;
   overflow: auto;
   padding:  0px 10px;
@@ -152,12 +154,12 @@ section {
 
 .pagination a {
   width: 50px;
-  border: 1px solid var(--color-white-faded);
+  border: 1px solid var(--color-background);
   text-align: center;
   align-items: center;
   justify-content: center;
   display: flex;
-  background: white;
+  background: var(--color-suface);
 }
 
 .pagination a:first-child {

@@ -39,9 +39,9 @@ export default {
 .table {
   min-width: 200px;
   margin: 10px 10px;
-  border: 2px solid var(--color-white-faded);
+  /* border: 2px solid var(--color-background); */
   padding: 10px;
-  background: white;
+  background: var(--color-surface);
   border-radius: 10px;
 }
 
@@ -49,7 +49,7 @@ export default {
   float: left;
   clear: left;
   margin: 5px 0px;
-  background: white;
+  background: var(--color-surface);
 }
 
 </style>

@@ -1,0 +1,1 @@
+export const IS_DARK_THEME = "STORE_GETTER_IS_DARK_THEME"
