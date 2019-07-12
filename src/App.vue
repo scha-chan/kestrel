@@ -17,19 +17,21 @@ import "./assets/styles/scroll.css"
 import "./assets/styles/input.css"
 import "./assets/styles/width.css"
 
+import * as Actions from "./store/StoreActions"
+import * as Getters from "./store/StoreGetters"
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'App',
-  data() {
-    return {
-      darkTheme: false
-    }
+  computed: {
+    ...mapGetters({
+      darkTheme: Getters.IS_DARK_THEME
+    })
   },
   methods: {
-    toggleTheme() {
-      this.darkTheme = !this.darkTheme
-    }
+    ...mapActions({
+      'toggleTheme': Actions.TOGGLE_DARK_THEME
+    })
   }
 }
 </script>
