@@ -1,7 +1,8 @@
 <template>
   <div class="dashboard-details" :class="{show}">
     <div class="download-csv">
-      <img src="@/assets/images/download.svg" title="Baixar relatório completo" @click="downloadCSV(0)">
+      <img v-if="darkTheme" src="@/assets/images/download-white.svg" title="Baixar relatório completo" @click="downloadCSV(0)">
+      <img v-else src="@/assets/images/download.svg" title="Baixar relatório completo" @click="downloadCSV(0)">
     </div>
     <div class="dashboard-title">{{details.status}} <span>Total: {{details.totalRecords}}</span> </div>
     <table>
@@ -11,10 +12,12 @@
       <tr :key="endpoint.idEndpoint" v-for="endpoint in getDetails.endPoints">
         <td :key="header" :class="[headersClasses[header]]" v-for="header in headers">{{endpoint[header]}}</td>
         <td>
-          <img src="@/assets/images/search.svg" title="Exibir detalhes" @click="exibirDetalhes(endpoint)">
+          <img v-if="darkTheme" src="@/assets/images/search-white.svg" title="Exibir detalhes" @click="exibirDetalhes(endpoint)">
+          <img v-else src="@/assets/images/search.svg" title="Exibir detalhes" @click="exibirDetalhes(endpoint)">
         </td>
         <td>
-          <img src="@/assets/images/download.svg" title="Baixar relatório" @click="downloadCSV(endpoint)">
+          <img v-if="darkTheme" src="@/assets/images/download-white.svg" title="Baixar relatório" @click="downloadCSV(endpoint)">
+          <img v-else src="@/assets/images/download.svg" title="Baixar relatório" @click="downloadCSV(endpoint)">
         </td>
       </tr>
     </table>
@@ -23,6 +26,8 @@
 
 <script>
 import fileDownload from "js-file-download"
+import * as Getters from "@/store/StoreGetters"
+import {mapGetters} from "vuex"
 
 export default {
   name: "DashboardDetails",
@@ -55,6 +60,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      darkTheme: Getters.IS_DARK_THEME
+    }),
     getDetails() {
       return this.details || {endPoints: []}
     }

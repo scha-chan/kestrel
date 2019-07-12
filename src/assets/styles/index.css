@@ -84,10 +84,6 @@ section {
   overflow: auto;
 }
 
- a {
-   color: var(--color-primary);
- }
-
 button {
   border: 0px;
   padding: 13px 30px;

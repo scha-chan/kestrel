@@ -106,10 +106,10 @@ export default {
       this.modalOpen = false;
     },
     openModal(endpointWrapper) {
-      this.modalOpen = true;
-      this.modalEndpoint = endpointWrapper
       this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${endpointWrapper.endpoint.idEndpoint}&statusCode=${endpointWrapper.status}`).then(data => {
         this.modalDetails = data.details
+          this.modalOpen = true;
+          this.modalEndpoint = endpointWrapper
       })
     },
     updateFullState(data) {

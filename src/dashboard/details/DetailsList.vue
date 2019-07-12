@@ -7,10 +7,12 @@
       <div class="row" :key="detail.id" v-for="detail in getDetails">
         <div class="cell" :title="detail[header]" :class="headersClasses[header]" :key="header" v-for="header in headers">{{detail[header]}}</div>
         <div class="cell half centralized-content" title="Copiar ID">
-          <img src="@/assets/images/clipboards.svg" @click="copyToClipboard(detail.id)">
+          <img v-if="darkTheme" src="@/assets/images/clipboards-white.svg" @click="copyToClipboard(detail.id)">
+          <img v-else src="@/assets/images/clipboards.svg" @click="copyToClipboard(detail.id)">
         </div>
         <div class="cell half centralized-content" title="Reenviar requisição">
-          <img src="@/assets/images/reload.svg" @click="retry(detail)">
+          <img v-if="darkTheme" src="@/assets/images/reload-white.svg" @click="retry(detail)">
+          <img v-else src="@/assets/images/reload.svg" @click="retry(detail)">
         </div>
       </div>
     </div>
@@ -19,6 +21,8 @@
 
 <script>
 import * as DetailsListColumnClasses from "./DetailsListColumnClasses"
+import * as Getters from "@/store/StoreGetters"
+import {mapGetters} from "vuex"
 
 export default {
   name: 'DetailsTable',
@@ -53,6 +57,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      darkTheme: Getters.IS_DARK_THEME
+    }),
     getDetails() {
       return this.details || []
     }
@@ -81,6 +88,12 @@ export default {
   position: sticky;
   top: 0;
   background: var(--color-suface);
+  background: white;
+  /* bug, nao pega o var direito, fica transparente */
+}
+
+.dark-theme .header-row {
+  background: #222326;
 }
 
 .row:nth-child(even) {
