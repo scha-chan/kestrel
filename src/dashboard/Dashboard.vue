@@ -1,7 +1,7 @@
 <template id="dashboard">
   <section>
     <loading-pane :show="isLoading"/>
-    <dashboard-modal :details="modalDetails" :endpointWrapper="endpointWrapper" :show="modalOpen" :closeModal="closeModal"/>
+    <dashboard-modal :notifyDetailsChange="notifyDetailsChange" :details="modalDetails" :endpointWrapper="endpointWrapper" :show="modalOpen" :closeModal="closeModal" :loadDetailsFn="loadDetails"/>
     <div class="wrapper dashboard-meta-data-wrappe">
       <dashboard-meta-data :running="running"
                            :action="action"
@@ -117,10 +117,24 @@ export default {
       this.modalOpen = false;
     },
     openModal(endpointWrapper) {
-      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${endpointWrapper.endpoint.idEndpoint}&statusCode=${endpointWrapper.status}`).then(data => {
+      this.setLoading(true)
+      this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${endpointWrapper.endpoint.idEndpoint}&statusCode=${endpointWrapper.status}`).then(data => {
+        this.setLoading(false)
         this.modalDetails = data.details
-          this.modalOpen = true;
-          this.modalEndpoint = endpointWrapper
+        this.modalOpen = true;
+        this.endpointWrapper = endpointWrapper
+      })
+    },
+    notifyDetailsChange() {
+      this.modalDetails.splice()
+    },
+    loadDetails(dataInicial, dataFinal, idEndpoint, statusCode) {
+      return this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4
+        &dataInicial=${dataInicial}
+        &dataFinal=${dataFinal}
+        &idEndpoint=${idEndpoint}
+        &statusCode=${statusCode}`).then(data => {
+        this.modalDetails = data.details
       })
     },
     updateFullState(data) {
@@ -167,7 +181,7 @@ export default {
     },
     loadData() {
       this.isLoading = true
-      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
+      this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
         this.updateFullState(data)
         this.localStorageService.saveToLocalStorage(data)
         this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=6&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {        
@@ -179,7 +193,7 @@ export default {
     stopRun(){
       this.isLoading = false
       this.action = 'Executing'
-      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=7`).then(data => {
+      this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=7`).then(data => {
       }).finally(() => [
         this.isLoading = false
       ])

@@ -89,6 +89,10 @@ export default {
   box-shadow: 2px 2px 10px 0px #afafaf;
 }
 
+.dark-theme .bar:hover {
+  box-shadow: 2px 2px 10px 0px #292929;
+}
+
 .legend {
   float: left;
   display: flex;

@@ -3,6 +3,9 @@
     <div class="details-wrapper" v-click-outside="onClickOutside">
       <dashboard-details
       :details="details"
+      :notifyDetailsChange="notifyDetailsChange"
+      :statusTitle="endpointWrapper.statusTitle"
+      :loadDetailsFn="loadDetailsFn"
       :endpoint="endpointWrapper.endpoint"
       :status="endpointWrapper.status"/>
     </div>
@@ -18,7 +21,7 @@ export default {
   directives: {
      clickOutside: vClickOutside.directive
    },
-  props: ['show', 'endpointWrapper', 'closeModal', 'details'],
+  props: ['show', 'endpointWrapper', 'closeModal', 'details', 'loadDetailsFn', 'notifyDetailsChange'],
   components: {
     'dashboard-details': Details
   },

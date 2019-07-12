@@ -53,11 +53,11 @@
 }
 
 .success {
-  background: #42d71d !important;
+  background: #42d71d;
 }
 
 .executing {
-  background: #00CED1 !important;
+  background: #00CED1;
 }
 
 .left {
