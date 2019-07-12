@@ -15,7 +15,7 @@ export default {
   components: {
     'highcharts': Chart
   },
-  props: ['seriesOrders'],
+  props: ['seriesOrders', 'total'],
   data() {
     return {
       chartOptions: {}
@@ -31,14 +31,9 @@ export default {
                  '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
         series: [{
             type: 'pie',
+            //name: 'Pendentes: 1000',
             innerSize: '50%',
-            name: 'teste',
-            data: [
-                [seriesOrders.status[0].desc, 51],
-                //[seriesOrders.status[1].desc, seriesOrders.status[1].percent],
-                //[seriesOrders.status[2].desc, seriesOrders.status[2].percent],
-                [seriesOrders.status[3].desc, 49]
-            ]
+            data: this.seriesOrders
         }],
         chart: {
             plotBackgroundColor: null,
@@ -58,7 +53,7 @@ export default {
                 textTransform: 'uppercase',
                 fontSize: '20px'
             },
-            text: 'Total: 1000',
+            text: 'Orders: ' + this.total,
             align: 'center',
             verticalAlign: 'middle',
             y: 40
@@ -70,7 +65,7 @@ export default {
           }
         },
         tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
+          pointFormat: '<b>{point.percentage:.1f}%</b>',
           backgroundColor: 'rgba(0, 0, 0, 0.85)',
             style: {
               color: '#F0F0F0'

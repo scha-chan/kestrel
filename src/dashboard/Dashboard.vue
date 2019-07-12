@@ -39,7 +39,7 @@
     </div>
 
     <div v-if="loadedOrders" class="wrapper dashboard-orders-wrapper">
-      <dashboard-orders :seriesOrders="orders"/>
+      <dashboard-orders :seriesOrders="seriesOrders" :total="total"/>
     </div>
 
     <tables-container :tables="tables"/>
@@ -86,13 +86,14 @@ export default {
       lastUpdated: '',
       queue: {},
       response: {},
-      orders: {},
+      seriesOrders: [],
       running: false,
       action: '',
       tables: [],
       timelineEnvio: [],
       timelineFila: [],
       isLoading: false,
+      total: 0,
       loadedOrders: false
     }
   },
@@ -134,8 +135,16 @@ export default {
       this.timelineFila.splice()
     },
     updateOrders(data) {
-      this.orders = data.orders
-      if(this.orders.totalOrders == 0){
+      this.seriesOrders = []
+      this.total = data.orders.totalOrders
+      data.orders.status.forEach(element => {
+          if(element.records > 0){
+            var arrayChartOrder = []
+            arrayChartOrder.push(element.desc, 25); 
+            this.seriesOrders.push(arrayChartOrder)
+          }
+      }); 
+      if(data.orders.totalOrders > 0){
          this.loadedOrders = true
       }
     },
