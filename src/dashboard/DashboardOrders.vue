@@ -15,7 +15,7 @@ export default {
   components: {
     'highcharts': Chart
   },
-  props: ['seriesOrders', 'total'],
+  props: ['seriesOrders', 'total', 'pieColors'],
   data() {
     return {
       chartOptions: {}
@@ -27,8 +27,8 @@ export default {
     }),
     options() {
       return {
-        colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066',
-                 '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
+        /*colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066',
+                 '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],*/
         series: [{
             type: 'pie',
             //name: 'Pendentes: 1000',
@@ -83,6 +83,7 @@ export default {
                 },
                 startAngle: -90,
                 endAngle: 90,
+                colors: this.pieColors,
                 center: ['50%', '75%'],
                 size: '110%'
             }

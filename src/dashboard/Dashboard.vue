@@ -38,7 +38,7 @@
                           :nameSerieRequest="'Requisições por Minuto'"/>
     </div>
     <div v-if="loadedOrders" class="wrapper dashboard-orders-wrapper">
-      <dashboard-orders :seriesOrders="seriesOrders" :total="total"/>
+      <dashboard-orders :seriesOrders="seriesOrders" :total="total" :pieColors="pieColors"/>
     </div>
     <div class="tables-container-container" :class="{'has-orders': loadedOrders}">
       <tables-container :tables="tables"/>
@@ -94,6 +94,7 @@ export default {
       timelineFila: [],
       isLoading: false,
       total: 0,
+      pieColors: [],
       loadedOrders: false
     }
   },
@@ -150,13 +151,26 @@ export default {
     },
     updateOrders(data) {
       this.seriesOrders = []
+      this.pieColors = []
       this.total = data.orders.totalOrders
       data.orders.status.forEach(element => {
           if(element.records > 0){
             var arrayChartOrder = []
-            arrayChartOrder.push(element.desc, element.percent);
+            arrayChartOrder.push(element.desc, element.percent)
             this.seriesOrders.push(arrayChartOrder)
-          }
+            if(element.desc == 'Pendente'){
+              this.pieColors.push("#1d52d7");
+            }
+            if(element.desc == 'Erro'){
+              this.pieColors.push("#8c1f17");
+            }
+            if(element.desc == 'Concluído'){
+              this.pieColors.push("#42d71d");
+            }
+            if(element.desc == 'Cancelado'){
+              this.pieColors.push("#d7831d");
+            }
+        }
       });
       if(data.orders.totalOrders > 0){
          this.loadedOrders = true
