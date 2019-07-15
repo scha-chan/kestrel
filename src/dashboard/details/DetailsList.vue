@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     retry(registro) {
-      this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=5&idRegistro=${registro.id}`).finally(() => this.retryCallback(registro))
+      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=5&idRegistro=${registro.id}`).finally(() => this.retryCallback(registro))
     },
     copyToClipboard(str) {
       var el = document.createElement('textarea');

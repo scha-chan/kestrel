@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 export const getData = () => {
-  return Vue.http.get('http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=01-01-2010&dataFinal=31-12-2020')
+  return Vue.http.get('http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=01-01-2010&dataFinal=31-12-2020')
 }
 
 export const createAllMinutesDay = () => {
@@ -33,9 +33,14 @@ export const mergeObjects = timeline => {
 
 
 const hourToMilli = str => {
-  return new Date("11/21/1987 00:00:00").getTime() + (((""+str).substring(0,2) - 2) * 60 * 60 * 1000) + ((""+str).substring(2,4) * 60 * 1000)
+  return new Date().setHours(0, 0, 0, 0) - (3 * 60 * 60 * 1000) + parseInt((((str).substring(0,2)) * 60 * 60 * 1000)) + parseInt(((str).substring(2,4) * 60 * 1000))
 }
 
 const putZero = str => str < 10 ? '0' + str : str
 
-const prependFillWithZero = str => str.length < 4 ? `${prependFillWithZero('0' + str)}` : str
+const prependFillWithZero = str => {
+  if(str.toString().length < 4) {
+    return '0' + str;
+  } 
+  return str;
+} 

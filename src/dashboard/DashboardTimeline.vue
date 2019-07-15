@@ -18,14 +18,18 @@ export default {
   props: ['seriesDataFila', 'timelineTitle', 'nameSerieFila', 'seriesDataRequest', 'nameSerieRequest'],
   data() {
     return {
-      chartOptions: {}
+      chartOptions: {
+            time: {
+              useUTC: false
+          }
+      }
     }
   },
   computed: {
     ...mapGetters({
       darkTheme: Getters.IS_DARK_THEME
     }),
-    options() {
+    options(chartOptions) {
       return {
         // series: this.seriesData.map(series => {
         //   return {

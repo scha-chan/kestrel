@@ -118,7 +118,7 @@ export default {
     },
     openModal(endpointWrapper) {
       this.setLoading(true)
-      this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${endpointWrapper.endpoint.idEndpoint}&statusCode=${endpointWrapper.status}`).then(data => {
+      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}&idEndpoint=${endpointWrapper.endpoint.idEndpoint}&statusCode=${endpointWrapper.status}`).then(data => {
         this.setLoading(false)
         this.modalDetails = data.details
         this.modalOpen = true;
@@ -129,7 +129,7 @@ export default {
       this.modalDetails.splice()
     },
     loadDetails(dataInicial, dataFinal, idEndpoint, statusCode) {
-      return this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4
+      return this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=4
         &dataInicial=${dataInicial}
         &dataFinal=${dataFinal}
         &idEndpoint=${idEndpoint}
@@ -181,10 +181,10 @@ export default {
     },
     loadData() {
       this.isLoading = true
-      this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
+      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=1&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
         this.updateFullState(data)
         this.localStorageService.saveToLocalStorage(data)
-        this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=6&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
+        this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=6&dataInicial=${this.dataInicial}&dataFinal=${this.dataFinal}`).then(data => {
           this.updateOrders(data)
       })}).finally(() => {
         this.isLoading = false
@@ -193,8 +193,7 @@ export default {
     stopRun(){
       this.isLoading = false
       this.action = 'Executing'
-      this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=7`).then(data => {
-      }).finally(() => [
+      this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=7`).then().finally(() => [
         this.isLoading = false
       ])
     }

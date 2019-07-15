@@ -71,7 +71,7 @@ export default {
       this[dateField] = date
     },
     resendRequest(detail) {
-      return this.$jsonp(`http://90.0.2.38:8080/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=5&idRegistro=${detail.id}`).then(data => {
+      return this.$jsonp(`http://172.22.4.252/cgi-bin/PP00100.exe?ppopcao=55&requisicao=138&request=5&opcao=5&idRegistro=${detail.id}`).then(data => {
         let detailInComponent = this.details.find(d => d.id == detail.id)
         detailInComponent.statusReenvio = data.status
         this.notifyDetailsChange()
