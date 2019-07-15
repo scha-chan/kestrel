@@ -29,7 +29,7 @@ export default {
     ...mapGetters({
       darkTheme: Getters.IS_DARK_THEME
     }),
-    options(chartOptions) {
+    options() {
       return {
         // series: this.seriesData.map(series => {
         //   return {
