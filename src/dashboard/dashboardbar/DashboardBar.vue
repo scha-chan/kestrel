@@ -27,12 +27,22 @@ export default {
   props: ['results', 'dataType', 'selectFn'],
   data() {
     return {
-      colors: DashboardStatusToColor
+      colors: DashboardStatusToColor,
+      statusQueueOrder: [4,6,7,5,3,1,2]
     }
   },
   computed: {
     resultsComputed() {
       return this.results || []
+    },
+    barsOrdered() {
+      if(this.dataType == 'queue') {
+        return this.statusQueueOrder.map(statusCode => {
+          return this.bars.find(bar => bar.statusCode == statusCode)
+        })
+      } else {
+        return this.bars
+      }
     },
     bars() {
       return this.resultsComputed.map(result => {
