@@ -34,8 +34,8 @@
       <dashboard-timeline :timelineTitle="'Processamento da Fila de Envio'"
                           :seriesDataFila="timelineFilaAxisAndSeriesAsArray"
                           :seriesDataRequest="timelineEnvioAxisAndSeriesAsArray"
-                          :nameSerieFila="'Inserts por Minuto'"
-                          :nameSerieRequest="'Requisições por Minuto'"/>
+                          :nameSerieFila="'Inserts p/ Minute'"
+                          :nameSerieRequest="'Request p/ Minute'"/>
     </div>
     <div v-if="loadedOrders" class="wrapper dashboard-orders-wrapper">
       <dashboard-orders :seriesOrders="seriesOrders" :total="total" :pieColors="pieColors"/>

@@ -122,4 +122,12 @@ input {
   visibility: visible;
 }
 
+.success {
+  background: #42d71d !important;
+}
+
+.executing {
+  background: #00CED1 !important;
+}
+
 </style>
